@@ -11,5 +11,5 @@
 
 char *prompt_user();
 void execute(char *input_command);
-
+void start();
 #endif
