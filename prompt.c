@@ -11,7 +11,7 @@ char *prompt_user()
 	size_t number = 0;
 
 	/* this line is prompting the user for a command and takes input from ouput */
-	printf("#cisfun$ ");
+	printf("$ ");
 	text = getline(&input, &number, stdin);
 	/* if the input empty return null */
 	if (text == -1)
@@ -23,8 +23,4 @@ char *prompt_user()
 	input[strcspn(input, "\n")] = '\0';
 	return (input);
 
-}
-int main()
-{
-	prompt_user();
 }
