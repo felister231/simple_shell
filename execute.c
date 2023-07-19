@@ -19,7 +19,4 @@ void execute(char *input_command)
 		exit(EXIT_FAILURE);
 	}
 }
-int main()
-{
-execute(char *input_command);
-}
+
