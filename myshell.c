@@ -20,13 +20,13 @@ void init_shell()
 	printf("\n\n\n\n******************"
 			"************************");
 	printf("\n\n\n\t****OUR SHELL****");
-	printf("\n\n\t-NAVIGATE AROUNF YOU MIGHT LIKE IT-");
+	printf("\n\n\t-NAVIGATE AROUND YOU MIGHT LIKE IT-");
 	printf("\n\n\n\n*******************"
 			"***********************");
 	char* username = getenv("USER");
 	printf("\n\n\nUSER is: @%s", username);
 	printf("\n");
-	sleep(1);
+	sleep(5);
 	clear();
 }
 
