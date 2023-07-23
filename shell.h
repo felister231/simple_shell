@@ -125,11 +125,11 @@ char *find_path(info_t *, char *, char *);
 /* loophsh.c */
 int loophsh(char **);
 
-/* file_io.c */
-void print_string_stderr(char *str);
-int print_char_stderr(char c);
-int print_char_to_fd(char c, int fd);
-int print_string_to_fd(char *str, int fd);
+/* toem_errors.c */
+void _eputs(char *);
+int _eputchar(char);
+int _putfd(char c, int fd);
+int _putsfd(char *str, int fd);
 
 /* toem_string.c */
 int _strlen(char *);
@@ -143,10 +143,10 @@ char *_strdup(const char *);
 void _puts(char *);
 int _putchar(char);
 
-/*text_functions.c */
-char *find_character_in_string(char *s, char c);
-char *concatenate_strings_n(char *dest, char *src, int n);
-char *copy_string_n(char *dest, char *src, int n);
+/* toem_exits.c */
+char *_strncpy(char *, char *, int);
+char *_strncat(char *, char *, int);
+char *_strchr(char *, char);
 
 /* toem_tokenizer.c */
 char **strtow(char *, char *);
@@ -161,54 +161,55 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_atoi.c */
-int is_interactive(info_t *info);
-int convert_string_to_integer(char *s);
-int is_alphabetic(int c);
-int is_character_delimiter(char c, char *delim);
+int interactive(info_t *);
+int is_delim(char, char *);
+int _isalpha(int);
+int _atoi(char *);
 
-/* error_utils.c */
-int convert_string_to_integer_safe(char *s);
-void print_error_message(info_t *info, char *error_type);
-int print_integer(int num, int fd);
-char *convert_number_to_string(long int num, int base, int flags);
-void remove_comments_from_string(char *buf);
+/* toem_errors1.c */
+int _erratoi(char *);
+void print_error(info_t *, char *);
+int print_d(int, int);
+char *convert_number(long int, int, int);
+void remove_comments(char *);
 
-/* shell builtin commands.c */
-int exit_shell(info_t *info);
-int show_help(info_t *info);
-int change_directory(info_t *info);
+/* toem_builtin.c */
+int _myexit(info_t *);
+int _mycd(info_t *);
+int _myhelp(info_t *);
 
-/* alias utilities */
-int display_history(info_t *info);
-int manage_alias(info_t *info);
+/* toem_builtin1.c */
+int _myhistory(info_t *);
+int _myalias(info_t *);
 
-/* input_handling.c*/
-void sigintHandler(__attribute__((unused))int sig_num);
-int _getline(info_t *info, char **ptr, size_t *length);
-ssize_t get_input(info_t *info);
+/*toem_getline.c */
+ssize_t get_input(info_t *);
+int _getline(info_t *, char **, size_t *);
+void sigintHandler(int);
 
-/* info_operations.c*/
-void clear_info(info_t *info);
-void set_info(info_t *info, char **av);
+/* toem_getinfo.c */
+void clear_info(info_t *);
+void set_info(info_t *, char **);
+void free_info(info_t *, int);
 
-/* environ.c */
-char *_find_environment_variable(info_t *info, const char *name);
-int print_environment(info_t *info);
-int set_environment_variable(info_t *info);
-int unset_environment_variable(info_t *info;
-int populate_environment_list(info_t *info);
+/* toem_environ.c */
+char *_getenv(info_t *, const char *);
+int _myenv(info_t *);
+int _mysetenv(info_t *);
+int _myunsetenv(info_t *);
+int populate_env_list(info_t *);
 
-/* env_operations.c */
-int set_environment_variable(info_t *info, char *variable, char *value);
-int unset_environment_variable(info_t *info, char *variable);
-char **get_environment_strings(info_t *info);
+/* toem_getenv.c */
+char **get_environ(info_t *);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
 
-/* _history.c */
-int renumberHistory(info_t *info);
-int addHistoryEntry(info_t *info, char *buf, int linecount);
-int readHistoryFromFile(info_t *info);
-int writeHistoryToFile(info_t *info);
-char *getHistoryFile(info_t *info);
+/* toem_history.c */
+char *get_history_file(info_t *info);
+int write_history(info_t *info);
+int read_history(info_t *info);
+int build_history_list(info_t *info, char *buf, int linecount);
+int renumber_history(info_t *info);
 
 /* toem_lists.c */
 list_t *add_node(list_t **, const char *, int);
@@ -230,5 +231,11 @@ void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_alias(info_t *);
 int replace_vars(info_t *);
 int replace_string(char **, char *);
+
+
+int set_alias(info_t *info, char *alias);
+ssize_t input_buf(info_t *info, char **buf, size_t *len);
+ssize_t read_buf(info_t *info, char *buf, size_t *i);
+
 
 #endif

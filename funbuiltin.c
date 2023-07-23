@@ -1,12 +1,6 @@
-#include "main.h"
+#include "shell.h"
 
-/**
- * show_help - Displays the help message for the shell.
- * @info: A pointer to the info_t struct containing shell information.
- *
- * Return: Always 0.
- */
-int show_help(info_t *info)
+int _myhelp(info_t *info)
 {
 	char **arg_array;
 
@@ -17,18 +11,11 @@ int show_help(info_t *info)
 	return (0);
 }
 
-/**
- * exit_shell - Handles the 'exit' command in the shell.
- * @info: A pointer to the info_t struct containing shell information.
- *
- * Return: -2 to indicate that the shell should exit gracefully.
- *         If exit arg is provided,the exit code is set in info->err_num.
- */
-int exit_shell(info_t *info)
+int _myexit(info_t *info)
 {
 	int exitcheck;
 
-	if (info->argv[1])  /* If there is an exit argument */
+	if (info->argv[1])  /* If there is an exit arguement */
 	{
 		exitcheck = _erratoi(info->argv[1]);
 		if (exitcheck == -1)
@@ -46,28 +33,22 @@ int exit_shell(info_t *info)
 	return (-2);
 }
 
-/**
- * change_directory - Handles the 'cd' command in the shell to change WD
- * @info: A pointer to the info_t struct containing shell information.
- *
- * Return: Always 0.
- */
-int change_directory(info_t *info)
-{	char *s, *dir, buffer[1024];
+int _mycd(info_t *info)
+{
+	char *s, *dir, buffer[1024];
 	int chdir_ret;
 
 	s = getcwd(buffer, 1024);
-
 	if (!s)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
-	if (!info->argv[1]) /* If no argument is provided, change to HOME directory */
+	if (!info->argv[1])
 	{
 		dir = _getenv(info, "HOME=");
 		if (!dir)
 			chdir_ret = /* TODO: what should this be? */
 				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
-		chdir_ret = chdir(dir);
+			chdir_ret = chdir(dir);
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
@@ -79,9 +60,9 @@ int change_directory(info_t *info)
 		}
 		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
 		chdir_ret = /* TODO: what should this be? */
-		chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
-	else /* Change to the specified directory */
+	else
 		chdir_ret = chdir(info->argv[1]);
 	if (chdir_ret == -1)
 	{
@@ -90,8 +71,9 @@ int change_directory(info_t *info)
 	}
 	else
 	{
-		_setenv(info, "OLDPWD", _getenv(info, "PWD=")); /* Update OLDPWD */
-		_setenv(info, "PWD", getcwd(buffer, 1024)); /* Update PWD */
+		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
+		_setenv(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }
+
