@@ -1,77 +1,82 @@
-int set_alias(info_t *info, char *alias_str)
+#include "main.h"
+
+/**
+ * is_interactive - Checks if the shell is running interactively
+ * @info: Pointer to the parameter struct containing environment info
+ *
+ * Return: 1 if STDIN is a terminal/ readfd is not greater than 2, 0 otherwise
+ */
+int is_interactive(info_t *info)
 {
-	char *p;
-
-	p = _strchr(str, '=');
-	if (!p)
-		return (1);
-	if (!*++p)
-		return (unset_alias(info, str));
-
-	unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	/* Returns true if STDIN is a terminal and readfd is not greater than 2 */
+	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
-int unset_alias(info_t *info, char *alias_str)
+/**
+ * convert_string_to_integer - Converts a string to an integer
+ * @s: The input string
+ *
+ * Return: The converted integer value
+ */
+int convert_string_to_integer(char *s)
 {
-	char *p, c;
-	int ret;
+	int i, sign = 1, flag = 0, output;
+	unsigned int result = 0;
 
-	p = _strchr(str, '=');
-	if (!p)
-		return (1);
-	c = *p;
-	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-			get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
-	*p = c;
-	return (ret);
-}
-int print_alias_list(list_t *alias_node)
-{
-	char *p = NULL, *a = NULL;
-
-	if (node)
+	for (i = 0; s[i] != '\0' && flag != 2; i++)
 	{
-		p = _strchr(node->str, '=');
-		for (a = node->str; a <= p; a++)
-			_putchar(*a);
-		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
-		return (0);
-	}
-	return (1);
-}
-int manage_alias(info_t *info)
-{
-	int i = 0;
-	char *p = NULL;
-	list_t *node = NULL;
+		/* Checks for a negative sign and updates the sign variable */
+		if (s[i] == '-')
+			sign *= -1;
 
-	if (info->argc == 1)
-	{
-		node = info->alias;
-		while (node)
+		/* Converts numeric characters to an integer */
+		if (s[i] >= '0' && s[i] <= '9')
 		{
-			print_alias(node);
-			node = node->next;
+			flag = 1;
+			result *= 10;
+			result += (s[i] - '0');
 		}
-		return (0);
-	}
-	for (i = 1; info->argv[i]; i++)
-	{
-		p = _strchr(info->argv[i], '=');
-		if (p)
-			set_alias(info, info->argv[i]);
-		else
-			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+		else if (flag == 1)
+			flag = 2;
 	}
 
-	return (0);
+	/* Handles the sign and returns the result as an integer */
+	if (sign == -1)
+		output = -result;
+	else
+		output = result;
+
+	return (output);
 }
-int display_history(info_t *info)
+
+/**
+ * is_alphabetic - Checks if a character is alphabetic
+ * @c: The character to check
+ *
+ * Return: 1 if the character is a lowercase or uppercase letter, 0 otherwise
+ */
+int is_alphabetic(int c)
 {
-	print_list(info->history);
+	/* Returns true if the character is a lowercase or uppercase letter */
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
+}
+
+/**
+ * is_character_delimiter - Check if a char is in the provided delimiter string
+ * @c: The character to check
+ * @delim: The delimiter string to search
+ *
+ * Return: 1 if the character is found in the delimiter string, 0 otherwise
+ */
+int is_character_delimiter(char c, char *delim)
+{
+	/* Loops through the delimiter string & returns true if the char is found */
+	while (*delim)
+		if (*delim++ == c)
+			return (1);
 	return (0);
 }
+
