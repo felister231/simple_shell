@@ -16,49 +16,49 @@ int _putchar(char c)
 }
 
 
-void _puts(char *str)
+void _puts(char *string)
 {
-	int i = 0;
+	int j = 0;
 
-	if (!str)
+	if (!string)
 		return;
-	while (str[i] != '\0')
+	while (string[j] != '\0')
 	{
-		_putchar(str[i]);
-		i++;
+		_putchar(string[j]);
+		j++;
 	}
 }
 
 
-char *_strdup(const char *str)
+char *_strdup(const char *string)
 {
-	int length = 0;
-	char *ret;
+	int size = 0;
+	char *zet;
 
-	if (str == NULL)
+	if (string == NULL)
 		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
+	while (*string++)
+		size++;
+	zet = malloc(sizeof(char) * (size + 1));
+	if (!zet)
 		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
-	return (ret);
+	for (size++; size--;)
+		zet[size] = *--string;
+	return (zet);
 }
 
 
-char *_strcpy(char *dest, char *src)
+char *_strcpy(char *destination, char *source)
 {
-	int i = 0;
+	int j = 0;
 
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
+	if (destination == source || source == 0)
+		return (destination);
+	while (source[j])
 	{
-		dest[i] = src[i];
-		i++;
+		destination[j] = source[j];
+		j++;
 	}
-	dest[i] = 0;
-	return (dest);
+	destination[j] = 0;
+	return (destination);
 }

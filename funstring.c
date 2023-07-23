@@ -1,38 +1,38 @@
 #include "shell.h"
 
 
-char *_strcat(char *dest, char *src)
+char *_strcat(char *destination, char *source)
 {
-	char *ret = dest;
+	char *zet = destination;
 
-	while (*dest)
-		dest++;
-	while (*src)
-		*dest++ = *src++;
-	*dest = *src;
-	return (ret);
+	while (*destination)
+		destination++;
+	while (*source)
+		*destination++ = *source++;
+	*destination = *source;
+	return (zet);
 }
 
 
-char *starts_with(const char *haystack, const char *needle)
+char *starts_with(const char *stack, const char *edle)
 {
-	while (*needle)
-		if (*needle++ != *haystack++)
+	while (*edle)
+		if (*edle++ != *stack++)
 			return (NULL);
-	return ((char *)haystack);
+	return ((char *)stack);
 }
 
 
-int _strlen(char *s)
+int _strlen(char *string)
 {
-	int i = 0;
+	int j = 0;
 
-	if (!s)
+	if (!string)
 		return (0);
 
-	while (*s++)
-		i++;
-	return (i);
+	while (*string++)
+		j++;
+	return (j);
 }
 
 

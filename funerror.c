@@ -1,15 +1,18 @@
 #include "shell.h"
 
-void remove_comments(char *buf)
+void remove_comments(char *buffer)
 {
-	int i;
+	int j = 0;
 
-	for (i = 0; buf[i] != '\0'; i++)
-		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
+	while (buffer[j] != '\0')
+	{
+		if (buffer[j] == '#' && (!j || buffer[j - 1] == ' '))
 		{
-			buf[i] = '\0';
+			buffer[j] = '\0';
 			break;
 		}
+		j++;
+	}
 }
 
 
