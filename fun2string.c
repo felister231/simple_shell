@@ -31,16 +31,16 @@ int _putchar(char c)
  * Return: None (void).
  */
 
-void _puts(char *str)
+void _puts(char *string)
 {
-	int i = 0;
+	int j = 0;
 
-	if (!str)
+	if (!string)
 		return;
-	while (str[i] != '\0')
+	while (string[j] != '\0')
 	{
-		_putchar(str[i]);
-		i++;
+		_putchar(string[j]);
+		j++;
 	}
 }
 
@@ -53,23 +53,24 @@ void _puts(char *str)
  *         On failure or if str is NULL, returns NULL.
  */
 
-char *_strdup(const char *str)
+char *_strdup(const char *string)
 {
-	int length = 0;
-	char *ret;
+	int size = 0;
+	char *zet;
 
-	if (str == NULL)
+	if (string == NULL)
 		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
+	while (*string++)
+		size++;
+	zet = malloc(sizeof(char) * (size + 1));
+	if (!zet)
 		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
-	return (ret);
+	for (size++; size--;)
+		zet[size] = *--string;
+	return (zet);
 }
 
+<<<<<<< HEAD
 /**
  * _strcpy - Copies a string pointed to by src to the buffer pointed to by dest.
  *
@@ -79,16 +80,20 @@ char *_strdup(const char *str)
  * Return: The pointer to the destination buffer (dest).
  */
 char *_strcpy(char *dest, char *src)
-{
-	int i = 0;
+=======
 
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
+char *_strcpy(char *destination, char *source)
+>>>>>>> b2872033e64b528e39fa27000b1de076e47112f4
+{
+	int j = 0;
+
+	if (destination == source || source == 0)
+		return (destination);
+	while (source[j])
 	{
-		dest[i] = src[i];
-		i++;
+		destination[j] = source[j];
+		j++;
 	}
-	dest[i] = 0;
-	return (dest);
+	destination[j] = 0;
+	return (destination);
 }
