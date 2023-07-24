@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * print_alias - Print an alias in the format: "alias='value'\n"
+ * @node: Pointer to the list node containing the alias string
+ *
+ * Return: 0 on success, 1 if the node is NULL
+ */
 int print_alias(list_t *node)
 {
 	char *p = NULL, *a = NULL;
@@ -16,6 +22,13 @@ int print_alias(list_t *node)
 	}
 	return (1);
 }
+
+/**
+ * _myalias - Handle aliases
+ * @info: Pointer to the info_t struct containing alias information
+ *
+ * Return: 0 on success
+ */
 
 int _myalias(info_t *info)
 {
@@ -45,11 +58,26 @@ int _myalias(info_t *info)
 	return (0);
 }
 
+/**
+ * _myhistory - Print the command history
+ * @info: Pointer to the info_t struct containing command history
+ *
+ * Return: 0 on success
+ */
+
 int _myhistory(info_t *info)
 {
 	print_list(info->history);
 	return (0);
 }
+
+/**
+ * unset_alias - Unset an alias from the alias list
+ * @info: Pointer to the info_t struct containing alias list
+ * @str: The alias string to unset
+ *
+ * Return: 0 on success, 1 if the alias is not found
+ */
 
 int unset_alias(info_t *info, char *str)
 {
@@ -62,10 +90,18 @@ int unset_alias(info_t *info, char *str)
 	c = *p;
 	*p = 0;
 	ret = delete_node_at_index(&(info->alias),
-		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+			get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
 	*p = c;
 	return (ret);
 }
+
+/**
+ * set_alias - Set an alias in the alias list
+ * @info: Pointer to the info_t struct containing alias list
+ * @str: The alias string to set
+ *
+ * Return: 0 on success, 1 if the alias is not valid or couldn't be set
+ */
 
 int set_alias(info_t *info, char *str)
 {

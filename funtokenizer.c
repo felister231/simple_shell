@@ -1,5 +1,21 @@
 #include "shell.h"
 
+/**
+ * strtow2 - Split a string into words using a delimiter
+ * @str: The input string to be split
+ * @d: The delimiter character
+ *
+ * Split the input string into words based on the specified delimiter character 'd'.
+ * Returns a dynamically allocated array of strings containing the words. The last
+ * element of the array is set to NULL to indicate the end. Returns NULL if memory
+ * allocation fails or if the input string is empty.
+ *
+ * @str: The input string to be split
+ * @d: The delimiter character
+ *
+ * Return: An array of strings containing the words, or NULL on failure
+ */
+
 char **strtow2(char *str, char d)
 {
 	int i, j, k, m, numwords = 0;
@@ -39,9 +55,21 @@ char **strtow2(char *str, char d)
 	return (s);
 }
 
-
-
-
+/**
+ * strtow - Split a string into words using multiple delimiters
+ * @str: The input string to be split
+ * @d: The delimiter characters
+ *
+ * Split the input string into words based on the specified delimiter characters 'd'.
+ * Returns a dynamically allocated array of strings containing the words. The last
+ * element of the array is set to NULL to indicate the end. Returns NULL if memory
+ * allocation fails or if the input string is empty.
+ *
+ * @str: The input string to be split
+ * @d: The delimiter characters
+ *
+ * Return: An array of strings containing the words, or NULL on failure
+ */
 char **strtow(char *str, char *d)
 {
 	int i, j, k, m, numwords = 0;

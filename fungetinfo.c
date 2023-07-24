@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * free_info - Free dynamically allocated memory in the info_t struct
+ * @info: Pointer to the info_t struct to be freed
+ * @all: A flag indicating whether to free all resources (1) or only specific ones (0)
+ */
+
 void free_info(info_t *info, int all)
 {
 	ffree(info->argv);
@@ -24,6 +30,11 @@ void free_info(info_t *info, int all)
 	}
 }
 
+/**
+ * clear_info - Clear/reset the fields in the info_t struct
+ * @info: Pointer to the info_t struct to be cleared
+ */
+
 void clear_info(info_t *info)
 {
 	info->arg = NULL;
@@ -32,6 +43,11 @@ void clear_info(info_t *info)
 	info->argc = 0;
 }
 
+/**
+ * parse_input - Parse the input command and prepare the info_t struct
+ * @info: Pointer to the info_t struct to be prepared
+ * @av: Array of strings containing the command-line arguments
+ */
 
 void set_info(info_t *info, char **av)
 {

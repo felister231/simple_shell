@@ -1,5 +1,15 @@
 #include "shell.h"
 
+/**
+ * _setenv - Set or update an environment variable
+ * @info: Pointer to the info_t struct containing environment variables
+ * @var: The name of the environment variable to set/update
+ * @value: The value to be assigned to the environment variable
+ *
+ * Sets or updates an environment variable with the provided name and value.
+ * Return: 0 on success, 1 if memory allocation fails
+ */
+
 int _setenv(info_t *info, char *var, char *value)
 {
 	char *buf = NULL;
@@ -34,6 +44,13 @@ int _setenv(info_t *info, char *var, char *value)
 	return (0);
 }
 
+/**
+ * get_environ - Get the environment variables as an array of strings
+ * @info: Pointer to the info_t struct containing environment variables
+ *
+ * Returns the environment variables as an array of strings.
+ */
+
 char **get_environ(info_t *info)
 {
 	if (!info->environ || info->env_changed)
@@ -44,6 +61,15 @@ char **get_environ(info_t *info)
 
 	return (info->environ);
 }
+
+/**
+ * _unsetenv - Unset an environment variable
+ * @info: Pointer to the info_t struct containing environment variables
+ * @var: The name of the environment variable to unset
+ *
+ * Unsets the environment variable with the provided name from the environment
+ * list (info->env). Returns 1 if the variable was unset, 0 if not found.
+ */
 
 int _unsetenv(info_t *info, char *var)
 {

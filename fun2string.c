@@ -70,7 +70,6 @@ char *_strdup(const char *string)
 	return (zet);
 }
 
-<<<<<<< HEAD
 /**
  * _strcpy - Copies a string pointed to by src to the buffer pointed to by dest.
  *
@@ -79,11 +78,8 @@ char *_strdup(const char *string)
  *
  * Return: The pointer to the destination buffer (dest).
  */
-char *_strcpy(char *dest, char *src)
-=======
 
 char *_strcpy(char *destination, char *source)
->>>>>>> b2872033e64b528e39fa27000b1de076e47112f4
 {
 	int j = 0;
 
