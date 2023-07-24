@@ -5,7 +5,7 @@
  * @head: Pointer to the head of the linked list
  * @node: Pointer to the node whose index is to be found
  *
- * Returns the index of the given node in the linked list starting from the head.
+ * Returns the index of  given node in  linked list starting from the head.
  * Return: The index of the node in the list, or -1 if the node is not found
  */
 
@@ -24,12 +24,12 @@ ssize_t get_node_index(list_t *head, list_t *node)
 }
 
 /**
- * node_starts_with - Find a node with a string that starts with the given prefix
+ * node_starts_with - Find a node with a string that starts with  given prefix
  * @node: Pointer to the head of the linked list
  * @prefix: The prefix to search for at the beginning of the strings
  * @c: Optional character to check after the prefix, or -1 to skip this check
  *
- * Return: Pointer to the first node with a matching string, or NULL if not found
+ * Return: Pointer to  first node with a matching string, or NULL if not found
  */
 
 list_t *node_starts_with(list_t *node, char *prefix, char c)

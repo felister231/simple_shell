@@ -5,9 +5,9 @@
  * @str: The input string to be split
  * @d: The delimiter character
  *
- * Split the input string into words based on the specified delimiter character 'd'.
- * Returns a dynamically allocated array of strings containing the words. The last
- * element of the array is set to NULL to indicate the end. Returns NULL if memory
+ * Split the input string into words based on  specified delimiter char 'd'.
+ * Returns a dynamically allocated [] of strings containing words. The last
+ * element of [] is set to NULL to indicate the end. Returns NULL if memory
  * allocation fails or if the input string is empty.
  *
  * @str: The input string to be split
@@ -60,10 +60,10 @@ char **strtow2(char *str, char d)
  * @str: The input string to be split
  * @d: The delimiter characters
  *
- * Split the input string into words based on the specified delimiter characters 'd'.
- * Returns a dynamically allocated array of strings containing the words. The last
- * element of the array is set to NULL to indicate the end. Returns NULL if memory
- * allocation fails or if the input string is empty.
+ * Split the input string into words based on specified delimiter char 'd'.
+ * Returns a dynamically allocated []of strings containing words. The last
+ * element of the array is set to NULL to indicate the end. Returns NULL
+ * if memmory allocation fails or if the input string is empty.
  *
  * @str: The input string to be split
  * @d: The delimiter characters

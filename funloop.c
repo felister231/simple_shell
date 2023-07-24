@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * fork_cmd - Fork and execute a command in the info_t struct.
+ * @info: Pointer to info_t struct containing shell information
+ *
+ * Return: None.
+ */
 
 void fork_cmd(info_t *info)
 {
@@ -35,8 +41,18 @@ void fork_cmd(info_t *info)
 	}
 }
 
-
-
+/**
+ * find_builtin - Check if the command is a built-in and execute it.
+ * @info: Pointer to info_t struct containing shell information.
+ *
+ * This function iterates through a table of recognized built-in commands
+ * and checks if the current command matches any of them. If a match is found,
+ * it updates the line count in the info_t struct and calls the corresponding
+ * built-in function with the given info_t struct. If no match is found, it
+ * returns -1 to indicate that the command is not a built-in.
+ *
+ * Return: The result of the execution or -1 if not a built-in.
+ */
 int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
@@ -62,7 +78,19 @@ int find_builtin(info_t *info)
 	return (built_in_ret);
 }
 
-
+/**
+ * find_cmd - Find and execute the given command.
+ * @info: Pointer to info_t struct containing shell information.
+ *
+ * This function checks if the command contains any arguments and if it does,
+ * it tries to locate the path of the command using the "find_path" function.
+ * If the command is found, it updates the path in the info_t struct and calls
+ * the "fork_cmd" function to execute the command. If the command is not found,
+ * it checks if the command is an absolute path or a built-in command, and if
+ * so, it executes the command. Otherwise, it prints an error message
+ *
+ * Return: None.
+ */
 
 void find_cmd(info_t *info)
 {
@@ -100,6 +128,13 @@ void find_cmd(info_t *info)
 	}
 }
 
+/**
+ * hsh - The main function of the simple shell program.
+ * @info: Pointer to the info_t structure containing shell information.
+ * @av: Array of strings containing the command-line arguments.
+ *
+ * Return: Returns exit status of shell or a special value if an error occurs.
+ */
 
 int hsh(info_t *info, char **av)
 {

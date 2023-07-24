@@ -1,5 +1,17 @@
 #include "shell.h"
 
+/**
+ * get_input - Reads user input and processes command chains.
+ * @info: Pointer to the info_t struct that holds shell information.
+ *
+ * This function reads user input from the command line and processes
+ * command chains separated by semicolons (';'). It handles command chains
+ * using a static buffer 'buf', 'i', and 'len'. The function returns the
+ * length of the current command if it's part of a chain, or the length of
+ * the entire input buffer if there are no command chains.
+ *
+ * Return: Length of the current command if part of a chain
+ */
 
 ssize_t get_input(info_t *info)
 {
@@ -40,6 +52,15 @@ ssize_t get_input(info_t *info)
 	return (r); /* return length of buffer from _getline() */
 }
 
+/**
+ * input_buf - Reads user input from stdin and processes command chains.
+ * @info: Pointer to the info_t struct that holds shell information.
+ * @buf: Pointer to a pointer that holds the input buffer.
+ * @len: Pointer to the size of the input buffer.
+ *
+ * Return: Length of the input buffer. Returns -1 on EOF.
+ */
+
 
 ssize_t input_buf(info_t *info, char **buf, size_t *len)
 {
@@ -77,7 +98,14 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 	return (r);
 }
 
-
+/**
+ * _getline - Reads input from the buffer 'buf' and handles line processing.
+ * @info: Pointer to the info_t struct that holds shell information.
+ * @ptr: Pointer to a pointer that holds the input buffer.
+ * @length: Pointer to the size of the input buffer.
+ *
+ * Return: Length of input buffer. Returns -1 on read failure or malloc error.
+ */
 
 int _getline(info_t *info, char **ptr, size_t *length)
 {
@@ -118,6 +146,17 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	return (s);
 }
 
+/**
+ * read_buf - Reads input from the file descriptor into the buffer 'buf'.
+ * @info: Pointer to the info_t struct that holds shell information.
+ * @buf: Pointer to the buffer to store the read input.
+ * @i: Pointer to a size_t variable representing the buffer's current position.
+ *
+ * This function reads input from the file descriptor 'info->readfd' into the
+ * buffer 'buf'. It updates the 'i' pointer with the number of bytes read.
+ *
+ * Return: Number of bytes read, or -1 on read error.
+ */
 
 ssize_t read_buf(info_t *info, char *buf, size_t *i)
 {
@@ -130,6 +169,14 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
 		*i = r;
 	return (r);
 }
+/**
+ * sigintHandler - Signal handler function for SIGINT (Ctrl+C) signal.
+ * @sig_num: The signal number (unused in the function).
+ *
+ * This function is called when the SIGINT signal is received.
+ *
+ * Return: This function does not return a value.
+ */
 
 
 void sigintHandler(__attribute__((unused))int sig_num)

@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * dup_chars - Extract a portion of a string and store it in a static buffer
+ * @pathstr: Input string
+ * @start: Starting index (inclusive) for extraction
+ * @stop: Stopping index (exclusive) for extraction
+ *
+ * Return: Pointer to the static buffer containing the extracted characters
+ */
 
 char *dup_chars(char *pathstr, int start, int stop)
 {
@@ -13,6 +21,14 @@ char *dup_chars(char *pathstr, int start, int stop)
 	return (buf);
 }
 
+/**
+ * find_path - Search for a command executable in the given path
+ * @info: Pointer to the info_t struct
+ * @pathstr: Path string containing directories to search for the command
+ * @cmd: Command to search for
+ *
+ * Return: Pointer to full path of command executable, or NULL if not found
+ */
 
 char *find_path(info_t *info, char *pathstr, char *cmd)
 {
@@ -49,6 +65,13 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 	return (NULL);
 }
 
+/**
+ * is_cmd - Check if the path is a regular file (executable command)
+ * @info: Pointer to the info_t struct (unused)
+ * @path: Path to check
+ *
+ * Return: 1 if the path is a regular file (executable command), 0 otherwise
+ */
 
 int is_cmd(info_t *info, char *path)
 {

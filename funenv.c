@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * populate_env_list - Populates the environment linked list with environment variables.
+ * populate_env_list - Populates the environment linked list with env vars.
  *
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
@@ -84,7 +84,7 @@ int _myunsetenv(info_t *info)
 }
 
 /**
- * _mysetenv - Initializes a new environment variable or modifies an existing one.
+ * _mysetenv - Initializes a new environ variable or modifies an existing one.
  *
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.

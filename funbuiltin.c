@@ -26,9 +26,9 @@ int _myhelp(info_t *info)
  *        constant function prototype.
  *
  * Return: If the function is called with an exit argument, it returns -2.
- *         If the exit argument is not a valid integer, it prints an error message
+ *         If the argument is not a valid integer,prints an error message
  *         and returns 1.
- *         If no exit argument is provided, it returns -2 and sets err_num to -1.
+ *         If no exit arg is provided, it returns -2 and sets err_num to -1.
  */
 
 int _myexit(info_t *info)

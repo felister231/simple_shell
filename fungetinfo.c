@@ -3,7 +3,7 @@
 /**
  * free_info - Free dynamically allocated memory in the info_t struct
  * @info: Pointer to the info_t struct to be freed
- * @all: A flag indicating whether to free all resources (1) or only specific ones (0)
+ * @all: Flag indicating if to free all resources(1) or only specific ones (0)
  */
 
 void free_info(info_t *info, int all)

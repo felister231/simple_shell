@@ -26,7 +26,7 @@ int _putchar(char c)
 /**
  * _puts - Writes a string to the standard output (stdout).
  *
- * @str: The string to be written.
+ * @string: The string to be written.
  *
  * Return: None (void).
  */
@@ -47,7 +47,7 @@ void _puts(char *string)
 /**
  * _strdup - Duplicates a string.
  *
- * @str: The string to be duplicated.
+ * @string: The string to be duplicated.
  *
  * Return: On success, returns a pointer to the duplicated string.
  *         On failure or if str is NULL, returns NULL.
@@ -71,10 +71,10 @@ char *_strdup(const char *string)
 }
 
 /**
- * _strcpy - Copies a string pointed to by src to the buffer pointed to by dest.
+ * _strcpy - Copies a string pointed to by src to the buf pointed to by dest.
  *
- * @dest: The buffer where the string is to be copied.
- * @src: The string to be copied.
+ * @destination: The buffer where the string is to be copied.
+ * @source: The string to be copied.
  *
  * Return: The pointer to the destination buffer (dest).
  */

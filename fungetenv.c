@@ -48,8 +48,8 @@ int _setenv(info_t *info, char *var, char *value)
  * get_environ - Get the environment variables as an array of strings
  * @info: Pointer to the info_t struct containing environment variables
  *
- * Returns the environment variables as an array of strings.
- */
+ * Return: Always returns 0 to indicate success
+*/
 
 char **get_environ(info_t *info)
 {
@@ -69,6 +69,7 @@ char **get_environ(info_t *info)
  *
  * Unsets the environment variable with the provided name from the environment
  * list (info->env). Returns 1 if the variable was unset, 0 if not found.
+* Return: 1 if any changes were made to the environment list 0 otherwise.
  */
 
 int _unsetenv(info_t *info, char *var)

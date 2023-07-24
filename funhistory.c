@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+ * write_history - Write the command history to a file
+ * @info: Pointer to the info_t structure containing the command history
+ * Return: On success, returns 1. On failure, returns -1.
+ */
 
 int write_history(info_t *info)
 {
@@ -24,6 +29,14 @@ int write_history(info_t *info)
 	return (1);
 }
 
+/**
+ * get_history_file - Get the path of the history file
+ * @info: Pointer to the info_t structure containing the environment
+ *
+ * Return: On success, returns a pointer to a newly allocated string containing
+ * the path of the history file. On failure or if the history file is not set,
+ * returns NULL.
+ */
 
 char *get_history_file(info_t *info)
 {
@@ -42,6 +55,14 @@ char *get_history_file(info_t *info)
 	return (buf);
 }
 
+/**
+ * build_history_list - Build and maintain the history list.
+ * @info: Pointer to the info_t structure containing the history list.
+ * @buf: Pointer to the buffer containing the command line input.
+ * @linecount: The current line count.
+ *
+ * Return: Always returns 0.
+ */
 
 int build_history_list(info_t *info, char *buf, int linecount)
 {
@@ -56,6 +77,12 @@ int build_history_list(info_t *info, char *buf, int linecount)
 	return (0);
 }
 
+/**
+ * read_history - Read history from history file and build the history list.
+ * @info: Pointer to the info_t structure containing the history list.
+ *
+ * Return: 1 on success, 0 on failure.
+ */
 
 
 int read_history(info_t *info)
@@ -101,7 +128,12 @@ int read_history(info_t *info)
 	return (info->histcount);
 }
 
-
+/**
+ * renumber_history - Renumber histylist nodes sequential nos starting from 0.
+ * @info: Pointer to the info_t structure containing the history list.
+ *
+ * Return: The total number of history list nodes after renumbering.
+ */
 int renumber_history(info_t *info)
 {
 	list_t *node = info->history;
