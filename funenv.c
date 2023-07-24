@@ -1,5 +1,14 @@
 #include "shell.h"
 
+/**
+ * populate_env_list - Populates the environment linked list with environment variables.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *
+ * Return: Always 0.
+ */
+
 int populate_env_list(info_t *info)
 {
 	list_t *node = NULL;
@@ -11,13 +20,29 @@ int populate_env_list(info_t *info)
 	return (0);
 }
 
-
+/**
+ * _myenv - Prints the current environment.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *
+ * Return: Always 0.
+ */
 int _myenv(info_t *info)
 {
 	print_list_str(info->env);
 	return (0);
 }
-
+/**
+ * _getenv - Gets the value of an environment variable.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ * @name: The environment variable name.
+ *
+ * Return: The value of the environment variable if found.
+ *         If the variable is not found, returns NULL.
+ */
 
 char *_getenv(info_t *info, const char *name)
 {
@@ -34,6 +59,14 @@ char *_getenv(info_t *info, const char *name)
 	return (NULL);
 }
 
+/**
+ * _myunsetenv - Remove an environment variable.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *
+ * Return: Always 0.
+ */
 
 int _myunsetenv(info_t *info)
 {
@@ -50,6 +83,17 @@ int _myunsetenv(info_t *info)
 	return (0);
 }
 
+/**
+ * _mysetenv - Initializes a new environment variable or modifies an existing one.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *
+ * Return: If the function is called with an incorrect number of arguments,
+ *         it prints an error message and returns 1.
+ *         If the environment variable is successfully set, it returns 0.
+ *         On failure, it returns 1.
+ */
 
 int _mysetenv(info_t *info)
 {

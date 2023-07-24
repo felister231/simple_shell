@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * _putchar - Writes a character to the standard output (stdout).
+ *
+ * @c: The character to be written.
+ *
+ * Return: On success, returns 1. On failure, returns -1.
+ */
+
 int _putchar(char c)
 {
 	static int i;
@@ -15,6 +23,13 @@ int _putchar(char c)
 	return (1);
 }
 
+/**
+ * _puts - Writes a string to the standard output (stdout).
+ *
+ * @str: The string to be written.
+ *
+ * Return: None (void).
+ */
 
 void _puts(char *str)
 {
@@ -29,6 +44,14 @@ void _puts(char *str)
 	}
 }
 
+/**
+ * _strdup - Duplicates a string.
+ *
+ * @str: The string to be duplicated.
+ *
+ * Return: On success, returns a pointer to the duplicated string.
+ *         On failure or if str is NULL, returns NULL.
+ */
 
 char *_strdup(const char *str)
 {
@@ -47,7 +70,14 @@ char *_strdup(const char *str)
 	return (ret);
 }
 
-
+/**
+ * _strcpy - Copies a string pointed to by src to the buffer pointed to by dest.
+ *
+ * @dest: The buffer where the string is to be copied.
+ * @src: The string to be copied.
+ *
+ * Return: The pointer to the destination buffer (dest).
+ */
 char *_strcpy(char *dest, char *src)
 {
 	int i = 0;

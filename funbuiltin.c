@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * _myhelp - Provides help information for the shell.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *
+ * Return: Always 0.
+ */
 int _myhelp(info_t *info)
 {
 	char **arg_array;
@@ -10,6 +18,18 @@ int _myhelp(info_t *info)
 		_puts(*arg_array); /* temp att_unused workaround */
 	return (0);
 }
+
+/**
+ * _myexit - Exits the shell with a given exit status or error code.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *
+ * Return: If the function is called with an exit argument, it returns -2.
+ *         If the exit argument is not a valid integer, it prints an error message
+ *         and returns 1.
+ *         If no exit argument is provided, it returns -2 and sets err_num to -1.
+ */
 
 int _myexit(info_t *info)
 {
@@ -32,6 +52,15 @@ int _myexit(info_t *info)
 	info->err_num = -1;
 	return (-2);
 }
+
+/**
+ * _mycd - Changes the current directory of the process.
+ *
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *
+ * Return: Always 0.
+ */
 
 int _mycd(info_t *info)
 {

@@ -1,4 +1,11 @@
 #include "shell.h"
+/**
+ * _eputs - Writes a string to the standard error (stderr).
+ *
+ * @str: The string to be written to stderr.
+ *
+ * Return: None (void).
+ */
 
 void _eputs(char *str)
 {
@@ -13,7 +20,15 @@ void _eputs(char *str)
 	}
 }
 
-
+/**
+ * _putsfd - Writes a string to the specified file descriptor.
+ *
+ * @str: The string to be written.
+ * @fd: The file descriptor to write to.
+ *
+ * Return: The number of characters written to the file descriptor.
+ *         If the input string is NULL, it returns 0.
+ */
 int _putsfd(char *str, int fd)
 {
 	int i = 0;
@@ -27,6 +42,13 @@ int _putsfd(char *str, int fd)
 	return (i);
 }
 
+/**
+ * _eputchar - Writes a character to the standard error (stderr).
+ *
+ * @c: The character to be written to stderr.
+ *
+ * Return: Always 1.
+ */
 int _eputchar(char c)
 {
 	static int i;
@@ -41,6 +63,15 @@ int _eputchar(char c)
 		buf[i++] = c;
 	return (1);
 }
+
+/**
+ * _putfd - Writes a character to the specified file descriptor.
+ *
+ * @c: The character to be written.
+ * @fd: The file descriptor to write to.
+ *
+ * Return: Always 1.
+ */
 
 int _putfd(char c, int fd)
 {
