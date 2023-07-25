@@ -6,9 +6,9 @@
  *
  * Return: 1 if interactive mode, 0 otherwise
  */
-int interactive(info_t *info)
+int interactive(info_t *data)
 {
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
+	return (isatty(STDIN_FILENO) && data->readfd <= 2);
 }
 
 /**
@@ -21,27 +21,27 @@ int interactive(info_t *info)
  * Return: The converted integer value
  */
 
-int _atoi(char *s)
+int _atoi(char *a)
 {
-	int i, sign = 1, flag = 0, output;
+	int b, signal = 1, symbol = 0, output;
 	unsigned int result = 0;
 
-	for (i = 0;  s[i] != '\0' && flag != 2; i++)
+	for (b = 0;  a[b] != '\0' && symbol != 2; b++)
 	{
-		if (s[i] == '-')
-			sign *= -1;
+		if (a[b] == '-')
+			signal *= -1;
 
-		if (s[i] >= '0' && s[i] <= '9')
+		if (a[b] >= '0' && a[b] <= '9')
 		{
-			flag = 1;
+			symbol = 1;
 			result *= 10;
-			result += (s[i] - '0');
+			result += (a[b] - '0');
 		}
-		else if (flag == 1)
-			flag = 2;
+		else if (symbol == 1)
+			symbol = 2;
 	}
 
-	if (sign == -1)
+	if (signal == -1)
 		output = -result;
 	else
 		output = result;
@@ -81,9 +81,9 @@ int is_delim(char c, char *delim)
  * Return: 1 if @c is an alphabet letter, otherwise 0
  */
 
-int _isalpha(int c)
+int _isalpha(int a)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z'))
 		return (1);
 	else
 		return (0);

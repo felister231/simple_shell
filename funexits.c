@@ -2,38 +2,40 @@
 
 /**
  * _strchr - Locate the first occurrence of a character in a string
- * @s: Pointer to the string to search
- * @c: The character to locate
+ * @string: Pointer to the string to search
+ * @x: The character to locate
  * Return: Ptr to the first occurrence of `c`, or NULL if not found.
  */
 
-char *_strchr(char *s, char c)
+char *_strchr(char *string, char x)
 {
 	do {
-		if (*s == c)
-			return (s);
-	} while (*s++ != '\0');
+		if (*string == x)
+			return (string);
+	} while (*string++ != '\0');
 
 	return (NULL);
 }
 
 /**
- * _strncpy - Copy a string up to n bytes
- * @dest: Pointer to the destination buffer
- * @src: Pointer to the source string
- * @n: Number of bytes to copy
- * Return: A pointer to the destination buffer @dest.
+ * _strncpy - Copy at most 'n' characters from the 'source' string to the
+ *            'destination' string. If 'source' is shorter than 'n' characters,
+ *            the destination is null-padded to a length of 'n'.
+ * @destination: Pointer to the buffer where the copied string will be stored.
+ * @source: Pointer to the string to be copied.
+ * @n: The maximum number of characters to copy from 'source'.
+ *
+ * Return: A pointer to the destination string.
  */
-
-char *_strncpy(char *dest, char *src, int n)
+char *_strncpy(char *destination, char *source, int n)
 {
 	int i, j;
-	char *s = dest;
+	char *d = destination;
 
 	i = 0;
-	while (src[i] != '\0' && i < n - 1)
+	while (source[i] != '\0' && i < n - 1)
 	{
-		dest[i] = src[i];
+		destination[i] = source[i];
 		i++;
 	}
 	if (i < n)
@@ -41,37 +43,38 @@ char *_strncpy(char *dest, char *src, int n)
 		j = i;
 		while (j < n)
 		{
-			dest[j] = '\0';
+			destination[j] = '\0';
 			j++;
 		}
 	}
-	return (s);
+	return (d);
 }
+
 
 /**
  * _strncat - Concatenate two strings up to n bytes
- * @dest: Pointer to the destination buffer
- * @src: Pointer to the source string
- * @n: Number of bytes to concatenate
+ * @destinnation: Pointer to the destination buffer
+ * @source: Pointer to the source string
+ * @a: Number of bytes o concatenate
  * Return: A pointer to the destination buffer @dest.
  */
 
-char *_strncat(char *dest, char *src, int n)
+char *_strncat(char *destination, char *source, int a)
 {
-	int i, j;
-	char *s = dest;
+	int x, y;
+	char *string = destination;
 
-	i = 0;
-	j = 0;
-	while (dest[i] != '\0')
-		i++;
-	while (src[j] != '\0' && j < n)
+	x = 0;
+	y = 0;
+	while (destination[x] != '\0')
+		x++;
+	while (source[y] != '\0' && y < a)
 	{
-		dest[i] = src[j];
-		i++;
-		j++;
+		destination[x] = source[y];
+		x++;
+		y++;
 	}
-	if (j < n)
-		dest[i] = '\0';
-	return (s);
+	if (y < a)
+		destination[x] = '\0';
+	return (string);
 }
