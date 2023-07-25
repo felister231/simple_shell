@@ -3,26 +3,26 @@
 /**
  * _myhelp - Provides help information for the shell.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *
  * Return: Always 0.
  */
-int _myhelp(info_t *info)
+int _myhelp(info_t *data)
 {
-	char **arg_array;
+	char **argument_array;
 
-	arg_array = info->argv;
+	argument_array = data->argv;
 	_puts("help call works. Function not yet implemented \n");
 	if (0)
-		_puts(*arg_array); /* temp att_unused workaround */
+		_puts(*argument_array); /* temp att_unused workaround */
 	return (0);
 }
 
 /**
  * _myexit - Exits the shell with a given exit status or error code.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *
  * Return: If the function is called with an exit argument, it returns -2.
@@ -31,78 +31,77 @@ int _myhelp(info_t *info)
  *         If no exit arg is provided, it returns -2 and sets err_num to -1.
  */
 
-int _myexit(info_t *info)
+int _myexit(info_t *data)
 {
-	int exitcheck;
+	int check_exit;
 
-	if (info->argv[1])  /* If there is an exit arguement */
+	if (data->argv[1])  /* If there is an exit arguement */
 	{
-		exitcheck = _erratoi(info->argv[1]);
-		if (exitcheck == -1)
+		check_exit = _erratoi(data->argv[1]);
+		if (check_exit == -1)
 		{
-			info->status = 2;
-			print_error(info, "Illegal number: ");
-			_eputs(info->argv[1]);
+			data->status = 2;
+			print_error(data, "Illegal number: ");
+			_eputs(data->argv[1]);
 			_eputchar('\n');
 			return (1);
 		}
-		info->err_num = _erratoi(info->argv[1]);
+		data->err_num = _erratoi(data->argv[1]);
 		return (-2);
 	}
-	info->err_num = -1;
+	data->err_num = -1;
 	return (-2);
 }
 
 /**
  * _mycd - Changes the current directory of the process.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *
  * Return: Always 0.
  */
 
-int _mycd(info_t *info)
+int _mycd(info_t *data)
 {
-	char *s, *dir, buffer[1024];
+	char *d, *directory, buffer[1024];
 	int chdir_ret;
 
-	s = getcwd(buffer, 1024);
-	if (!s)
+	d = getcwd(buffer, 1024);
+	if (!d)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
-	if (!info->argv[1])
+	if (!data->argv[1])
 	{
-		dir = _getenv(info, "HOME=");
-		if (!dir)
+		directory = _getenv(data, "HOME=");
+		if (!directory)
 			chdir_ret = /* TODO: what should this be? */
-				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+				chdir((directory = _getenv(data, "PWD=")) ? directory : "/");
 		else
-			chdir_ret = chdir(dir);
+			chdir_ret = chdir(directory);
 	}
-	else if (_strcmp(info->argv[1], "-") == 0)
+	else if (_strcmp(data->argv[1], "-") == 0)
 	{
-		if (!_getenv(info, "OLDPWD="))
+		if (!_getenv(data, "OLDPWD="))
 		{
-			_puts(s);
+			_puts(d);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+		_puts(_getenv(data, "OLDPWD=")), _putchar('\n');
 		chdir_ret = /* TODO: what should this be? */
-			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+			chdir((directory = _getenv(data, "OLDPWD=")) ? directory : "/");
 	}
 	else
-		chdir_ret = chdir(info->argv[1]);
+		chdir_ret = chdir(data->argv[1]);
 	if (chdir_ret == -1)
 	{
-		print_error(info, "can't cd to ");
-		_eputs(info->argv[1]), _eputchar('\n');
+		print_error(data, "can't cd to ");
+		_eputs(data->argv[1]), _eputchar('\n');
 	}
 	else
 	{
-		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		_setenv(info, "PWD", getcwd(buffer, 1024));
+		_setenv(data, "OLDPWD", _getenv(data, "PWD="));
+		_setenv(data, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }
-
