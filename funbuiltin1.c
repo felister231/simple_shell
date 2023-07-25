@@ -6,17 +6,17 @@
  *
  * Return: 0 on success, 1 if the node is NULL
  */
-int print_alias(list_t *node)
+int print_alias(list_t *first_node)
 {
-	char *p = NULL, *a = NULL;
+	char *pointer = NULL, *b = NULL;
 
-	if (node)
+	if (first_node)
 	{
-		p = _strchr(node->str, '=');
-		for (a = node->str; a <= p; a++)
-			_putchar(*a);
+		pointer = _strchr(first_node->str, '=');
+		for (b = first_node->str; b <= pointer; b++)
+			_putchar(*b);
 		_putchar('\'');
-		_puts(p + 1);
+		_puts(pointer + 1);
 		_puts("'\n");
 		return (0);
 	}
@@ -25,34 +25,34 @@ int print_alias(list_t *node)
 
 /**
  * _myalias - Handle aliases
- * @info: Pointer to the info_t struct containing alias information
+ * @data: Pointer to the info_t struct containing alias information
  *
  * Return: 0 on success
  */
 
-int _myalias(info_t *info)
+int _myalias(info_t *data)
 {
 	int i = 0;
-	char *p = NULL;
-	list_t *node = NULL;
+	char *pointer = NULL;
+	list_t *first_node = NULL;
 
-	if (info->argc == 1)
+	if (data->argc == 1)
 	{
-		node = info->alias;
-		while (node)
+		first_node = data->alias;
+		while (first_node)
 		{
-			print_alias(node);
-			node = node->next;
+			print_alias(first_node);
+			first_node = first_node->next;
 		}
 		return (0);
 	}
-	for (i = 1; info->argv[i]; i++)
+	for (i = 1; data->argv[i]; i++)
 	{
-		p = _strchr(info->argv[i], '=');
-		if (p)
-			set_alias(info, info->argv[i]);
+		pointer = _strchr(data->argv[i], '=');
+		if (pointer)
+			set_alias(data, data->argv[i]);
 		else
-			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+			print_alias(node_starts_with(data->alias, data->argv[i], '='));
 	}
 
 	return (0);
@@ -60,59 +60,59 @@ int _myalias(info_t *info)
 
 /**
  * _myhistory - Print the command history
- * @info: Pointer to the info_t struct containing command history
+ * @data: Pointer to the info_t struct containing command history
  *
  * Return: 0 on success
  */
 
-int _myhistory(info_t *info)
+int _myhistory(info_t *data)
 {
-	print_list(info->history);
+	print_list(data->history);
 	return (0);
 }
 
 /**
  * unset_alias - Unset an alias from the alias list
- * @info: Pointer to the info_t struct containing alias list
- * @str: The alias string to unset
+ * @data: Pointer to the info_t struct containing alias list
+ * @string: The alias string to unset
  *
  * Return: 0 on success, 1 if the alias is not found
  */
 
-int unset_alias(info_t *info, char *str)
+int unset_alias(info_t *data, char *string)
 {
-	char *p, c;
+	char *pointer, d;
 	int ret;
 
-	p = _strchr(str, '=');
-	if (!p)
+	pointer = _strchr(string, '=');
+	if (!pointer)
 		return (1);
-	c = *p;
-	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-			get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
-	*p = c;
+	d = *pointer;
+	*pointer = 0;
+	ret = delete_node_at_index(&(data->alias),
+			get_node_index(data->alias, node_starts_with(data->alias, string, -1)));
+	*pointer = d;
 	return (ret);
 }
 
 /**
  * set_alias - Set an alias in the alias list
- * @info: Pointer to the info_t struct containing alias list
- * @str: The alias string to set
+ * @data: Pointer to the info_t struct containing alias list
+ * @string: The alias string to set
  *
  * Return: 0 on success, 1 if the alias is not valid or couldn't be set
  */
 
-int set_alias(info_t *info, char *str)
+int set_alias(info_t *data, char *string)
 {
-	char *p;
+	char *pointer;
 
-	p = _strchr(str, '=');
-	if (!p)
+	pointer = _strchr(string, '=');
+	if (!pointer)
 		return (1);
-	if (!*++p)
-		return (unset_alias(info, str));
+	if (!*++pointer)
+		return (unset_alias(data, string));
 
-	unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	unset_alias(data, string);
+	return (add_node_end(&(data->alias), string, 0) == NULL);
 }
