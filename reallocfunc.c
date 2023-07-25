@@ -1,60 +1,61 @@
 #include "shell.h"
 
 /**
- * _realloc - Reallocate memory block with a different size
- * @ptr: Pointer to the previously allocated memory block
- * @old_size: The size of the old memory block
- * @new_size: The size of the new memory block
+ * _realloc - Reallocate memory for a block of memory.
+ * @pointer: Pointer to the memory block to reallocate.
+ * @oldSize: Size of the current memory block.
+ * @newSize: New size to reallocate.
  *
- * Return: Pointer to the reallocated memory block, or NULL on failure
+ * Return: Pointer to the reallocated memory block, or NULL on failure.
  */
-
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *_realloc(void *pointer, unsigned int oldSize, unsigned int newSize)
 {
-	char *p;
+	char *ptr;
 
+	if (!pointer)
+		return (malloc(newSize));
+	if (!newSize)
+		return (free(pointer), NULL);
+	if (newSize == oldSize)
+		return (pointer);
+
+	ptr = malloc(newSize);
 	if (!ptr)
-		return (malloc(new_size));
-	if (!new_size)
-		return (free(ptr), NULL);
-	if (new_size == old_size)
-		return (ptr);
-
-	p = malloc(new_size);
-	if (!p)
 		return (NULL);
 
-	old_size = old_size < new_size ? old_size : new_size;
-	while (old_size--)
-		p[old_size] = ((char *)ptr)[old_size];
-	free(ptr);
-	return (p);
+	oldSize = oldSize < newSize ? oldSize : newSize;
+	while (oldSize--)
+		ptr[oldSize] = ((char *)pointer)[oldSize];
+	free(pointer);
+	return (ptr);
 }
+
+
 
 /**
  * _memset - Fill memory with a constant byte
- * @s: Pointer to the memory area to be filled
- * @b: The value to be set (as byte)
- * @n: The number of bytes to be filled
+ * @string: Pointer to the memory area to be filled
+ * @byte: The value to be set (as byte)
+ * @number: The number of bytes to be filled
  *
  * Fill the memory area pointed to by 's' with the constant byte 'b'. The 'n'
  * parameter determines the number of bytes to be filled. Returns a pointer to
  * the memory area 's'.
  *
- * @s: Pointer to the memory area to be filled
- * @b: The value to be set (as byte)
- * @n: The number of bytes to be filled
+ * @string: Pointer to the memory area to be filled
+ * @byte: The value to be set (as byte)
+ * @number: The number of bytes to be filled
  *
- * Return: Pointer to the memory area 's'
+ * Return: Pointer to the memory area 'string'
  */
 
-char *_memset(char *s, char b, unsigned int n)
+char *_memset(char *string, char byte, unsigned int number)
 {
-	unsigned int i;
+	unsigned int j;
 
-	for (i = 0; i < n; i++)
-		s[i] = b;
-	return (s);
+	for (j = 0; j < number; j++)
+		string[j] = byte;
+	return (string);
 }
 
 /**
@@ -69,13 +70,13 @@ char *_memset(char *s, char b, unsigned int n)
  */
 
 
-void ffree(char **pp)
+void ffree(char **pointer)
 {
-	char **a = pp;
+	char **j = pointer;
 
-	if (!pp)
+	if (!pointer)
 		return;
-	while (*pp)
-		free(*pp++);
-	free(a);
+	while (*pointer)
+		free(*pointer++);
+	free(j);
 }

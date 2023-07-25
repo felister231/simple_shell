@@ -13,43 +13,43 @@
  * Return: Length of the current command if part of a chain
  */
 
-ssize_t get_input(info_t *info)
+ssize_t get_input(info_t *data)
 {
-	static char *buf; /* the ';' command chain buffer */
-	static size_t i, j, len;
-	ssize_t r = 0;
-	char **buf_p = &(info->arg), *p;
+	static char *buffer; /* the ';' command chain buffer */
+	static size_t a, b, length;
+	ssize_t i = 0;
+	char **buffer_pointer = &(data->arg), *pointer;
 
 	_putchar(BUF_FLUSH);
-	r = input_buf(info, &buf, &len);
-	if (r == -1) /* EOF */
+	i = input_buf(data, &buffer, &length);
+	if (i == -1) /* EOF */
 		return (-1);
-	if (len)	/* we have commands left in the chain buffer */
+	if (length)	/* we have commands left in the chain buffer */
 	{
-		j = i; /* init new iterator to current buf position */
-		p = buf + i; /* get pointer for return */
+		b = a; /* init new iterator to current buf position */
+		pointer = buffer + a; /* get pointer for return */
 
-		check_chain(info, buf, &j, i, len);
-		while (j < len) /* iterate to semicolon or end */
+		check_chain(data, buffer, &b, a, length);
+		while (b < length) /* iterate to semicolon or end */
 		{
-			if (is_chain(info, buf, &j))
+			if (is_chain(data, buffer, &a))
 				break;
-			j++;
+			b++;
 		}
 
-		i = j + 1; /* increment past nulled ';'' */
-		if (i >= len) /* reached end of buffer? */
+		a = b + 1; /* increment past nulled ';'' */
+		if (a >= length) /* reached end of buffer? */
 		{
-			i = len = 0; /* reset position and length */
-			info->cmd_buf_type = CMD_NORM;
+			a = length = 0; /* reset position and length */
+			data->cmd_buf_type = CMD_NORM;
 		}
 
-		*buf_p = p; /* pass back pointer to current command position */
-		return (_strlen(p)); /* return length of current command */
+		*buffer_pointer = pointer; /* pass back pointer to current command position */
+		return (_strlen(pointer)); /* return length of current command */
 	}
 
-	*buf_p = buf; /* else not a chain, pass back buffer from _getline() */
-	return (r); /* return length of buffer from _getline() */
+	*buffer_pointer = buffer; /* else not a chain, pass back buffer from _getline() */
+	return (i); /* return length of buffer from _getline() */
 }
 
 /**
@@ -62,40 +62,40 @@ ssize_t get_input(info_t *info)
  */
 
 
-ssize_t input_buf(info_t *info, char **buf, size_t *len)
+ssize_t input_buf(info_t *data, char **buffer, size_t *length)
 {
-	ssize_t r = 0;
-	size_t len_p = 0;
+	ssize_t a = 0;
+	size_t length_pointer = 0;
 
-	if (!*len) /* if nothing left in the buffer, fill it */
+	if (!*length) /* if nothing left in the buffer, fill it */
 	{
 		/*bfree((void **)info->cmd_buf);*/
-		free(*buf);
-		*buf = NULL;
+		free(*buffer);
+		*buffer = NULL;
 		signal(SIGINT, sigintHandler);
 #if USE_GETLINE
-		r = getline(buf, &len_p, stdin);
+		a = getline(buffer, &length_pointer, stdin);
 #else
-		r = _getline(info, buf, &len_p);
+		a = _getline(data, buffer, &length_pointer);
 #endif
-		if (r > 0)
+		if (a > 0)
 		{
-			if ((*buf)[r - 1] == '\n')
+			if ((*buffer)[a - 1] == '\n')
 			{
-				(*buf)[r - 1] = '\0'; /* remove trailing newline */
-				r--;
+				(*buffer)[a - 1] = '\0'; /* remove trailing newline */
+				a--;
 			}
-			info->linecount_flag = 1;
-			remove_comments(*buf);
-			build_history_list(info, *buf, info->histcount++);
+			data->linecount_flag = 1;
+			remove_comments(*buffer);
+			build_history_list(data, *buffer, data->histcount++);
 			/* if (_strchr(*buf, ';')) is this a command chain? */
 			{
-				*len = r;
-				info->cmd_buf = buf;
+				*length = a;
+				data->cmd_buf = buffer;
 			}
 		}
 	}
-	return (r);
+	return (a);
 }
 
 /**
@@ -107,43 +107,43 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
  * Return: Length of input buffer. Returns -1 on read failure or malloc error.
  */
 
-int _getline(info_t *info, char **ptr, size_t *length)
+int _getline(info_t *data, char **ptr, size_t *longg)
 {
-	static char buf[READ_BUF_SIZE];
-	static size_t i, len;
-	size_t k;
-	ssize_t r = 0, s = 0;
-	char *p = NULL, *new_p = NULL, *c;
+	static char buffer[READ_BUF_SIZE];
+	static size_t a, lenth;
+	size_t b;
+	ssize_t c = 0, d = 0;
+	char *pointer = NULL, *new_pointer = NULL, *e;
 
-	p = *ptr;
-	if (p && length)
-		s = *length;
-	if (i == len)
-		i = len = 0;
+	pointer = *ptr;
+	if (pointer && longg)
+		d = *longg;
+	if (a == lenth)
+		a = lenth = 0;
 
-	r = read_buf(info, buf, &len);
-	if (r == -1 || (r == 0 && len == 0))
+	c = read_buf(data, buffer, &lenth);
+	if (c == -1 || (c == 0 && lenth == 0))
 		return (-1);
 
-	c = _strchr(buf + i, '\n');
-	k = c ? 1 + (unsigned int)(c - buf) : len;
-	new_p = _realloc(p, s, s ? s + k : k + 1);
-	if (!new_p) /* MALLOC FAILURE! */
-		return (p ? free(p), -1 : -1);
+	e = _strchr(buffer + a, '\n');
+	b = e ? 1 + (unsigned int)(e - buffer) : lenth;
+	new_pointer = _realloc(pointer, d, d ? d + b : b + 1);
+	if (!new_pointer) /* MALLOC FAILURE! */
+		return (pointer ? free(pointer), -1 : -1);
 
-	if (s)
-		_strncat(new_p, buf + i, k - i);
+	if (d)
+		_strncat(new_pointer, buffer + a, b - a);
 	else
-		_strncpy(new_p, buf + i, k - i + 1);
+		_strncpy(new_pointer, buffer + a, b - a + 1);
 
-	s += k - i;
-	i = k;
-	p = new_p;
+	d += b - a;
+	a = b;
+	pointer = new_pointer;
 
-	if (length)
-		*length = s;
-	*ptr = p;
-	return (s);
+	if (longg)
+		*longg = d;
+	*ptr = pointer;
+	return (d);
 }
 
 /**
@@ -158,16 +158,16 @@ int _getline(info_t *info, char **ptr, size_t *length)
  * Return: Number of bytes read, or -1 on read error.
  */
 
-ssize_t read_buf(info_t *info, char *buf, size_t *i)
+ssize_t read_buf(info_t *data, char *buffer, size_t *a)
 {
-	ssize_t r = 0;
+	ssize_t b = 0;
 
-	if (*i)
+	if (*a)
 		return (0);
-	r = read(info->readfd, buf, READ_BUF_SIZE);
-	if (r >= 0)
-		*i = r;
-	return (r);
+	b = read(data->readfd, buffer, READ_BUF_SIZE);
+	if (b >= 0)
+		*a = b;
+	return (b);
 }
 /**
  * sigintHandler - Signal handler function for SIGINT (Ctrl+C) signal.
@@ -179,7 +179,7 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
  */
 
 
-void sigintHandler(__attribute__((unused))int sig_num)
+void sigintHandler(__attribute__((unused))int signal_num)
 {
 	_puts("\n");
 	_puts("$ ");
