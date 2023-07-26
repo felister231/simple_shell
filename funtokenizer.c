@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * strtow2 - Split a string into words using a delimiter
- * @str: The input string to be split
- * @d: The delimiter character
+ * str_Delim - Split a string into words using a delimiter
+ * @string: The input string to be split
+ * @c: The delimiter character
  *
  * Split the input string into words based on  specified delimiter char 'd'.
  * Returns a dynamically allocated [] of strings containing words. The last
@@ -16,7 +16,7 @@
  * Return: An array of strings containing the words, or NULL on failure
  */
 
-char **strtow2(char *string, char c)
+char **str_Delim(char *string, char c)
 {
 	int x, y, z, a, word_count = 0;
 	char **b;

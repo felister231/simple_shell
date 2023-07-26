@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _setenv - Set or update an environment variable
+ * update_Env - Set or update an environment variable
  * @info: Pointer to the info_t struct containing environment variables
  * @var: The name of the environment variable to set/update
  * @value: The value to be assigned to the environment variable
@@ -10,7 +10,7 @@
  * Return: 0 on success, 1 if memory allocation fails
  */
 
-int _setenv(info_t *info, char *var, char *value)
+int update_Env(data_info *info, char *var, char *value)
 {
 	char *buf = NULL;
 	list_t *node;
@@ -28,7 +28,7 @@ int _setenv(info_t *info, char *var, char *value)
 	node = info->env;
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = str_Startwith(node->str, var);
 		if (p && *p == '=')
 		{
 			free(node->str);
@@ -38,24 +38,24 @@ int _setenv(info_t *info, char *var, char *value)
 		}
 		node = node->next;
 	}
-	add_node_end(&(info->env), buf, 0);
+	nodeAdd_end(&(info->env), buf, 0);
 	free(buf);
 	info->env_changed = 1;
 	return (0);
 }
 
 /**
- * get_environ - Get the environment variables as an array of strings
+ * get_Enviroment_var - Get the environment variables as an array of strings
  * @info: Pointer to the info_t struct containing environment variables
  *
  * Return: Always returns 0 to indicate success
 */
 
-char **get_environ(info_t *info)
+char **get_Enviroment_var(data_info *info)
 {
 	if (!info->environ || info->env_changed)
 	{
-		info->environ = list_to_strings(info->env);
+		info->environ = convert_list_to_str(info->env);
 		info->env_changed = 0;
 	}
 
@@ -63,7 +63,7 @@ char **get_environ(info_t *info)
 }
 
 /**
- * _unsetenv - Unset an environment variable
+ * unset_Environ_var - Unset an environment variable
  * @info: Pointer to the info_t struct containing environment variables
  * @var: The name of the environment variable to unset
  *
@@ -72,7 +72,7 @@ char **get_environ(info_t *info)
 * Return: 1 if any changes were made to the environment list 0 otherwise.
  */
 
-int _unsetenv(info_t *info, char *var)
+int unset_Environ_var(data_info *info, char *var)
 {
 	list_t *node = info->env;
 	size_t i = 0;
@@ -83,10 +83,10 @@ int _unsetenv(info_t *info, char *var)
 
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = str_Startwith(node->str, var);
 		if (p && *p == '=')
 		{
-			info->env_changed = delete_node_at_index(&(info->env), i);
+			info->env_changed = deleteNode_index(&(info->env), i);
 			i = 0;
 			node = info->env;
 			continue;

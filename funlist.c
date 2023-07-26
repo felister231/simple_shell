@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * free_list - Free the memory occupied by a linked list and its nodes.
+ * freeMem_list - Free the memory occupied by a linked list and its nodes.
  * pointer_head: A pointer to the head node of the linked list.
  *
  * This function frees the memory occupied by a linked list and its nodes,
@@ -10,7 +10,7 @@
  * Return: None.
  */
 
-void free_list(list_t **pointer_head)
+void freeMem_list(list_t **pointer_head)
 {
 	list_t *first_node, *next_node, *head;
 
@@ -29,7 +29,7 @@ void free_list(list_t **pointer_head)
 }
 
 /**
- * delete_node_at_index - Delete a node at a specific index in a linked list.
+ * deleteNode_index - Delete a node at a specific index in a linked list.
  * @list_head: A pointer to the head node of the linked list.
  * @number: The index of the node to delete.
  *
@@ -41,7 +41,7 @@ void free_list(list_t **pointer_head)
  */
 
 
-int delete_node_at_index(list_t **list_head, unsigned int number)
+int deleteNode_index(list_t **list_head, unsigned int number)
 {
 	list_t *first_node, *prev_node;
 	unsigned int i = 0;
@@ -75,7 +75,7 @@ int delete_node_at_index(list_t **list_head, unsigned int number)
 }
 
 /**
- * print_list_str - Print the strings of each node in a linked list.
+ * nodePrint_str - Print the strings of each node in a linked list.
  * @head: A pointer to the head node of the linked list.
  *
  * This function prints the strings stored in each node of the linked list.
@@ -85,7 +85,7 @@ int delete_node_at_index(list_t **list_head, unsigned int number)
  * Return: The number of nodes in the linked list.
  */
 
-size_t print_list_str(const list_t *head)
+size_t nodePrint_str(const list_t *head)
 {
 	size_t j = 0;
 
@@ -100,7 +100,7 @@ size_t print_list_str(const list_t *head)
 }
 
 /**
- * add_node_end - Add a new node at the end of a linked list.
+ * nodeAdd_end - Add a new node at the end of a linked list.
  * @head_pointer: A pointer to the pointer of the head node of the linked list.
  * @string: The string to be stored in the new node.
  * @number: An integer to be stored in the new node.
@@ -108,7 +108,7 @@ size_t print_list_str(const list_t *head)
  * Return: A pointer to new node, or NULL if function fails to create the node.
  */
 
-list_t *add_node_end(list_t **head_pointer, const char *string, int number)
+list_t *nodeAdd_end(list_t **head_pointer, const char *string, int number)
 {
 	list_t *new_node, *node;
 
@@ -142,7 +142,7 @@ list_t *add_node_end(list_t **head_pointer, const char *string, int number)
 }
 
 /**
- * add_node - Add a new node at the beginning of a linked list.
+ * addStart_node - Add a new node at the beginning of a linked list.
  * @head_pointer: A pointer to the pointer of the head node of the linked list.
  * @string: The string to be stored in the new node.
  * @number: An integer to be stored in the new node.
@@ -151,7 +151,7 @@ list_t *add_node_end(list_t **head_pointer, const char *string, int number)
  */
 
 
-list_t *add_node(list_t **head_pointer, const char *string, int number)
+list_t *addStart_node(list_t **head_pointer, const char *string, int number)
 {
 	list_t *new_head;
 

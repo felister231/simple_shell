@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * remove_comments - Remove comments from the buffer
+ * remove_Bufcomments - Remove comments from the buffer
  * @buffer: Pointer to the buffer containing the input string
  *
  * This function removes comments from  input buffer. A comment is identified
@@ -10,7 +10,7 @@
  * everything after it with a null terminator ('\0').
  */
 
-void remove_comments(char *buffer)
+void remove_Bufcomments(char *buffer)
 {
 	int j = 0;
 
@@ -26,7 +26,7 @@ void remove_comments(char *buffer)
 }
 
 /**
- * convert_number - Convert a number to a string representation in a given base
+ * convert_Numstr - Convert a number to a string representation in a given base
  * @num: The number to convert
  * @base: The base for conversion (e.g., 2 for binary, 10 for decimal, etc.)
  * @flags: Flags to control the conversion behavior
@@ -34,7 +34,7 @@ void remove_comments(char *buffer)
  * Return: A pointer to the string representation of the converted number
  */
 
-char *convert_number(long int num, int base, int flags)
+char *convert_Numstr(long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
@@ -63,7 +63,7 @@ char *convert_number(long int num, int base, int flags)
 }
 
 /**
- * print_error - Print error message to standard error (stderr)
+ * print_Errorstderr - Print error message to standard error (stderr)
  * @info: Pointer to the info_t struct containing shell information
  * @estr: Error message to be printed
  *
@@ -75,11 +75,11 @@ char *convert_number(long int num, int base, int flags)
  * @estr: Error message to be printed
  */
 
-void print_error(info_t *info, char *estr)
+void print_Errorstderr(data_info *info, char *estr)
 {
 	_eputs(info->fname);
 	_eputs(": ");
-	print_d(info->line_count, STDERR_FILENO);
+	print_Intdescriptor(info->line_count, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(info->argv[0]);
 	_eputs(": ");
@@ -87,7 +87,7 @@ void print_error(info_t *info, char *estr)
 }
 
 /**
- * print_d - Print an integer to a file descriptor
+ * print_Intdescriptor - Print an integer to a file descriptor
  * @input: The integer to be printed
  * @fd: The file descriptor to which the integer is printed
  *
@@ -97,14 +97,14 @@ void print_error(info_t *info, char *estr)
  * Return: The number of characters printed.
  */
 
-int print_d(int input, int fd)
+int print_Intdescriptor(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
 	int i, count = 0;
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		__putchar = _eputchar;
+		__putchar = errorputchar;
 	if (input < 0)
 	{
 		_abs_ = -input;

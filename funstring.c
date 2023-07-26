@@ -25,7 +25,7 @@ char *_strcat(char *destination, char *source)
 }
 
 /**
- * starts_with - Checks if a string starts with a specified prefix.
+ * str_Startwith - Checks if a string starts with a specified prefix.
  * @stack: Pointer to the input string.
  * @edle: Pointer to the prefix to check.
  *
@@ -36,7 +36,7 @@ char *_strcat(char *destination, char *source)
  * Return: Pointer to the position after the prefix or NULL if not found.
  */
 
-char *starts_with(const char *stack, const char *edle)
+char *str_Startwith(const char *stack, const char *edle)
 {
 	while (*edle)
 		if (*edle++ != *stack++)

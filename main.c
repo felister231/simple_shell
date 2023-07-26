@@ -9,7 +9,7 @@
  */
 int main(int argc, char **argv)
 {
-	info_t data[] = { INFO_INIT };
+	data_info data[] = { INFO_INIT };
 	int fileD = 2;
 
 	asm ("mov %1, %0\n\t"
@@ -29,16 +29,16 @@ int main(int argc, char **argv)
 				_eputs(argv[0]);
 				_eputs(": 0: Can't open ");
 				_eputs(argv[1]);
-				_eputchar('\n');
-				_eputchar(BUF_FLUSH);
+				errorputchar('\n');
+				errorputchar(BUF_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
 		}
 		data->readfd = fileD;
 	}
-	populate_env_list(data);
-	read_history(data);
+	enviro_list_pop(data);
+	readAll_his(data);
 	hsh(data, argv);
 	return (EXIT_SUCCESS);
 }

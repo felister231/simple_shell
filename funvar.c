@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * replace_string - Replace the content of string pointer with new string
+ * strContent_replace - Replace the content of string pointer with new string
  * @old: Pointer to the old string pointer
  * @new: New string to be assigned to the old string pointer
  *
  * Return: Always returns 1
  */
 
-int replace_string(char **old, char *new)
+int strContent_replace(char **old, char *new)
 {
 	free(*old);
 	*old = new;
@@ -16,13 +16,13 @@ int replace_string(char **old, char *new)
 }
 
 /**
- * replace_vars - Replace variables in argv with corresponding values from env
+ * variableReplace - Replace variables in argv with corresponding values from env
  * @info: Pointer to the info_t struct containing command and env information
  *
  * Return: Always returns 0
  */
 
-int replace_vars(info_t *info)
+int variableReplace(data_info *info)
 {
 	int i = 0;
 	list_t *node;
@@ -34,37 +34,37 @@ int replace_vars(info_t *info)
 
 		if (!_strcmp(info->argv[i], "$?"))
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
+			strContent_replace(&(info->argv[i]),
+				_strdup(convert_Numstr(info->status, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(info->argv[i], "$$"))
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(getpid(), 10, 0)));
+			strContent_replace(&(info->argv[i]),
+				_strdup(convert_Numstr(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
+		node = strNode_with(info->env, &info->argv[i][1], '=');
 		if (node)
 		{
-			replace_string(&(info->argv[i]),
+			strContent_replace(&(info->argv[i]),
 				_strdup(_strchr(node->str, '=') + 1));
 			continue;
 		}
-		replace_string(&info->argv[i], _strdup(""));
+		strContent_replace(&info->argv[i], _strdup(""));
 
 	}
 	return (0);
 }
 
 /**
- * replace_alias - Replace the command with its alias if found in list
+ * cmdAlias_replace - Replace the command with its alias if found in list
  * @info: Pointer to the info_t struct containing command and alias information
  *
  * Return: 1 if the replacement is successful, 0 if no matching alias is found.
  */
 
-int replace_alias(info_t *info)
+int cmdAlias_replace(data_info *info)
 {
 	int i;
 	list_t *node;
@@ -72,7 +72,7 @@ int replace_alias(info_t *info)
 
 	for (i = 0; i < 10; i++)
 	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
+		node = strNode_with(info->alias, info->argv[0], '=');
 		if (!node)
 			return (0);
 		free(info->argv[0]);
@@ -88,7 +88,7 @@ int replace_alias(info_t *info)
 }
 
 /**
- * check_chain - Check the status of command buffer and update it accordingly
+ * bufferUpdate_check - Check the status of command buffer and update it accordingly
  * @info: Pointer to the info_t struct containing command and status info
  * @buf: Buffer containing the command chain
  * @p: Pointer to the current index in the buffer
@@ -96,7 +96,7 @@ int replace_alias(info_t *info)
  * @len: Length of the buffer
  */
 
-void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
+void bufferUpdate_check(data_info *info, char *buf, size_t *p, size_t i, size_t len)
 {
 	size_t j = *p;
 
@@ -121,14 +121,14 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 }
 
 /**
- * is_chain - Check if current command is type CMD_OR, CMD_AND, or CMD_CHAIN
+ * chainCmd - Check if current command is type CMD_OR, CMD_AND, or CMD_CHAIN
  * @info: Pointer to the info_t struct containing command buffer type info
  * @buf: Buffer containing the command chain
  * @p: Pointer to the current index in the buffer
  *
  * Return: 1 if a valid command chain is found, 0 otherwise.
  */
-int is_chain(info_t *info, char *buf, size_t *p)
+int chainCmd(data_info *info, char *buf, size_t *p)
 {
 	size_t j = *p;
 

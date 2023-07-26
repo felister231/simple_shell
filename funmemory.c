@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * bfree - Frees a pointer and sets it to NULL.
+ * free_memory - Frees a pointer and sets it to NULL.
  * @pointer: Address of the pointer to be freed.
  *
  * Return: 1 if the pointer was freed, otherwise 0.
  */
 
 
-int bfree(void **pointer)
+int free_memory(void **pointer)
 {
 	if (pointer && *pointer)
 	{

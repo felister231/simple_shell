@@ -15,13 +15,13 @@ void _eputs(char *str)
 		return;
 	while (str[i] != '\0')
 	{
-		_eputchar(str[i]);
+		errorputchar(str[i]);
 		i++;
 	}
 }
 
 /**
- * _putsfd - Writes a string to the specified file descriptor.
+ * putstrfd - Writes a string to the specified file descriptor.
  *
  * @str: The string to be written.
  * @fd: The file descriptor to write to.
@@ -29,7 +29,7 @@ void _eputs(char *str)
  * Return: The number of characters written to the file descriptor.
  *         If the input string is NULL, it returns 0.
  */
-int _putsfd(char *str, int fd)
+int putstrfd(char *str, int fd)
 {
 	int i = 0;
 
@@ -37,19 +37,19 @@ int _putsfd(char *str, int fd)
 		return (0);
 	while (*str)
 	{
-		i += _putfd(*str++, fd);
+		i += put_Filedescriptor(*str++, fd);
 	}
 	return (i);
 }
 
 /**
- * _eputchar - Writes a character to the standard error (stderr).
+ * errorputchar - Writes a character to the standard error (stderr).
  *
  * @c: The character to be written to stderr.
  *
  * Return: Always 1.
  */
-int _eputchar(char c)
+int errorputchar(char c)
 {
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
@@ -65,7 +65,7 @@ int _eputchar(char c)
 }
 
 /**
- * _putfd - Writes a character to the specified file descriptor.
+ * put_Filedescriptor - Writes a character to the specified file descriptor.
  *
  * @c: The character to be written.
  * @fd: The file descriptor to write to.
@@ -73,7 +73,7 @@ int _eputchar(char c)
  * Return: Always 1.
  */
 
-int _putfd(char c, int fd)
+int put_Filedescriptor(char c, int fd)
 {
 	static int i;
 	static char buf[WRITE_BUF_SIZE];

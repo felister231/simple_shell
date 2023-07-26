@@ -59,7 +59,7 @@ char *_memset(char *string, char byte, unsigned int number)
 }
 
 /**
- * ffree - Free a dynamically allocated array of strings
+ * freealloc - Free a dynamically allocated array of strings
  * @pp: Pointer to the array of strings to be freed
  *
  * Frees the dynamically allocated memory for each string in the array, as well
@@ -70,7 +70,7 @@ char *_memset(char *string, char byte, unsigned int number)
  */
 
 
-void ffree(char **pointer)
+void freealloc(char **pointer)
 {
 	char **j = pointer;
 

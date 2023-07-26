@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * fork_cmd - Fork and execute a command in the info_t struct.
+ * fork_commandline - Fork and execute a command in the info_t struct.
  * @info: Pointer to info_t struct containing shell information
  *
  * Return: None.
  */
 
-void fork_cmd(info_t *data)
+void fork_commandline(data_info *data)
 {
 	pid_t child_pid;
 
@@ -20,9 +20,9 @@ void fork_cmd(info_t *data)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(data->path, data->argv, get_environ(data)) == -1)
+		if (execve(data->path, data->argv, get_Enviroment_var(data)) == -1)
 		{
-			free_info(data, 1);
+			free_Datainfo(data, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);
@@ -36,13 +36,13 @@ void fork_cmd(info_t *data)
 		{
 			data->status = WEXITSTATUS(data->status);
 			if (data->status == 126)
-				print_error(data, "Permission denied\n");
+				print_Errorstderr(data, "Permission denied\n");
 		}
 	}
 }
 
 /**
- * find_builtin - Check if the command is a built-in and execute it.
+ * fun_findBuiltin - Check if the command is a built-in and execute it.
  * @info: Pointer to info_t struct containing shell information.
  *
  * This function iterates through a table of recognized built-in commands
@@ -53,18 +53,18 @@ void fork_cmd(info_t *data)
  *
  * Return: The result of the execution or -1 if not a built-in.
  */
-int find_builtin(info_t *data)
+int fun_findBuiltin(data_info *data)
 {
 	int a, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", _myexit},
-		{"env", _myenv},
-		{"help", _myhelp},
-		{"history", _myhistory},
-		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
-		{"cd", _mycd},
-		{"alias", _myalias},
+		{"exit", shell_exit},
+		{"env", _myenvironment},
+		{"help", shell_help},
+		{"history", shell_history},
+		{"setenv", _mysetenviroment},
+		{"unsetenv", unset_Environ_variroment},
+		{"cd", shell_cd},
+		{"alias", shell_alias},
 		{NULL, NULL}
 	};
 
@@ -79,20 +79,20 @@ int find_builtin(info_t *data)
 }
 
 /**
- * find_cmd - Find and execute the given command.
+ * find_commandLine - Find and execute the given command.
  * @info: Pointer to info_t struct containing shell information.
  *
  * This function checks if the command contains any arguments and if it does,
- * it tries to locate the path of the command using the "find_path" function.
+ * it tries to locate the path of the command using the "pathCmd" function.
  * If the command is found, it updates the path in the info_t struct and calls
- * the "fork_cmd" function to execute the command. If the command is not found,
+ * the "fork_commandline" function to execute the command. If the command is not found,
  * it checks if the command is an absolute path or a built-in command, and if
  * so, it executes the command. Otherwise, it prints an error message
 i *
  * Return: None.
  */
 
-void find_cmd(info_t *data)
+void find_commandLine(data_info *data)
 {
 	char *path = NULL;
 	int a, b;
@@ -109,21 +109,21 @@ void find_cmd(info_t *data)
 	if (!b)
 		return;
 
-	path = find_path(data, _getenv(data, "PATH="), data->argv[0]);
+	path = pathCmd(data, _getenviroment(data, "PATH="), data->argv[0]);
 	if (path)
 	{
 		data->path = path;
-		fork_cmd(data);
+		fork_commandline(data);
 	}
 	else
 	{
-		if ((interactive(data) || _getenv(data, "PATH=")
-					|| data->argv[0][0] == '/') && is_cmd(data, data->argv[0]))
-			fork_cmd(data);
+		if ((interactive(data) || _getenviroment(data, "PATH=")
+					|| data->argv[0][0] == '/') && is_commandline(data, data->argv[0]))
+			fork_commandline(data);
 		else if (*(data->arg) != '\n')
 		{
 			data->status = 127;
-			print_error(data, "not found\n");
+			print_Errorstderr(data, "not found\n");
 		}
 	}
 }
@@ -136,31 +136,31 @@ void find_cmd(info_t *data)
  * Return: Returns exit status of shell or a special value if an error occurs.
  */
 
-int hsh(info_t *data, char **argv)
+int hsh(data_info *data, char **argv)
 {
 	ssize_t a = 0;
 	int builtin_result = 0;
 
 	while (a != -1 && builtin_result != -2)
 	{
-		clear_info(data);
+		clear_Datainfo(data);
 		if (interactive(data))
 			_puts("$ ");
-		_eputchar(BUF_FLUSH);
-		a = get_input(data);
+		errorputchar(BUF_FLUSH);
+		a = get_userinput(data);
 		if (a != -1)
 		{
-			set_info(data, argv);
-			builtin_result = find_builtin(data);
+			set_Datainfo(data, argv);
+			builtin_result = fun_findBuiltin(data);
 			if (builtin_result == -1)
-				find_cmd(data);
+				find_commandLine(data);
 		}
 		else if (interactive(data))
 			_putchar('\n');
-		free_info(data, 0);
+		free_Datainfo(data, 0);
 	}
-	write_history(data);
-	free_info(data, 1);
+	write_cmdhistory(data);
+	free_Datainfo(data, 1);
 	if (!interactive(data) && data->status)
 		exit(data->status);
 	if (builtin_result == -2)

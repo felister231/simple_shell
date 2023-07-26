@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * get_input - Reads user input and processes command chains.
+ * get_userinput - Reads user input and processes command chains.
  * @info: Pointer to the info_t struct that holds shell information.
  *
  * This function reads user input from the command line and processes
@@ -13,7 +13,7 @@
  * Return: Length of the current command if part of a chain
  */
 
-ssize_t get_input(info_t *data)
+ssize_t get_userinput(data_info *data)
 {
 	static char *buffer; /* the ';' command chain buffer */
 	static size_t a, b, length;
@@ -21,7 +21,7 @@ ssize_t get_input(info_t *data)
 	char **buffer_pointer = &(data->arg), *pointer;
 
 	_putchar(BUF_FLUSH);
-	i = input_buf(data, &buffer, &length);
+	i = input_buffer(data, &buffer, &length);
 	if (i == -1) /* EOF */
 		return (-1);
 	if (length)	/* we have commands left in the chain buffer */
@@ -29,10 +29,10 @@ ssize_t get_input(info_t *data)
 		b = a; /* init new iterator to current buf position */
 		pointer = buffer + a; /* get pointer for return */
 
-		check_chain(data, buffer, &b, a, length);
+		bufferUpdate_check(data, buffer, &b, a, length);
 		while (b < length) /* iterate to semicolon or end */
 		{
-			if (is_chain(data, buffer, &a))
+			if (chainCmd(data, buffer, &a))
 				break;
 			b++;
 		}
@@ -53,7 +53,7 @@ ssize_t get_input(info_t *data)
 }
 
 /**
- * input_buf - Reads user input from stdin and processes command chains.
+ * input_buffer - Reads user input from stdin and processes command chains.
  * @info: Pointer to the info_t struct that holds shell information.
  * @buf: Pointer to a pointer that holds the input buffer.
  * @len: Pointer to the size of the input buffer.
@@ -62,17 +62,17 @@ ssize_t get_input(info_t *data)
  */
 
 
-ssize_t input_buf(info_t *data, char **buffer, size_t *length)
+ssize_t input_buffer(data_info *data, char **buffer, size_t *length)
 {
 	ssize_t a = 0;
 	size_t length_pointer = 0;
 
 	if (!*length) /* if nothing left in the buffer, fill it */
 	{
-		/*bfree((void **)info->cmd_buf);*/
+		/*free_memory((void **)info->cmd_buf);*/
 		free(*buffer);
 		*buffer = NULL;
-		signal(SIGINT, sigintHandler);
+		signal(SIGINT, singleintHandler);
 #if USE_GETLINE
 		a = getline(buffer, &length_pointer, stdin);
 #else
@@ -86,8 +86,8 @@ ssize_t input_buf(info_t *data, char **buffer, size_t *length)
 				a--;
 			}
 			data->linecount_flag = 1;
-			remove_comments(*buffer);
-			build_history_list(data, *buffer, data->histcount++);
+			remove_Bufcomments(*buffer);
+			history_build_ls(data, *buffer, data->histcount++);
 			/* if (_strchr(*buf, ';')) is this a command chain? */
 			{
 				*length = a;
@@ -107,7 +107,7 @@ ssize_t input_buf(info_t *data, char **buffer, size_t *length)
  * Return: Length of input buffer. Returns -1 on read failure or malloc error.
  */
 
-int _getline(info_t *data, char **ptr, size_t *longg)
+int _getline(data_info *data, char **ptr, size_t *longg)
 {
 	static char buffer[READ_BUF_SIZE];
 	static size_t a, lenth;
@@ -121,7 +121,7 @@ int _getline(info_t *data, char **ptr, size_t *longg)
 	if (a == lenth)
 		a = lenth = 0;
 
-	c = read_buf(data, buffer, &lenth);
+	c = read_buffer(data, buffer, &lenth);
 	if (c == -1 || (c == 0 && lenth == 0))
 		return (-1);
 
@@ -147,7 +147,7 @@ int _getline(info_t *data, char **ptr, size_t *longg)
 }
 
 /**
- * read_buf - Reads input from the file descriptor into the buffer 'buf'.
+ * read_buffer - Reads input from the file descriptor into the buffer 'buf'.
  * @info: Pointer to the info_t struct that holds shell information.
  * @buf: Pointer to the buffer to store the read input.
  * @i: Pointer to a size_t variable representing the buffer's current position.
@@ -158,7 +158,7 @@ int _getline(info_t *data, char **ptr, size_t *longg)
  * Return: Number of bytes read, or -1 on read error.
  */
 
-ssize_t read_buf(info_t *data, char *buffer, size_t *a)
+ssize_t read_buffer(data_info *data, char *buffer, size_t *a)
 {
 	ssize_t b = 0;
 
@@ -170,7 +170,7 @@ ssize_t read_buf(info_t *data, char *buffer, size_t *a)
 	return (b);
 }
 /**
- * sigintHandler - Signal handler function for SIGINT (Ctrl+C) signal.
+ * singleintHandler - Signal handler function for SIGINT (Ctrl+C) signal.
  * @sig_num: The signal number (unused in the function).
  *
  * This function is called when the SIGINT signal is received.
@@ -179,7 +179,7 @@ ssize_t read_buf(info_t *data, char *buffer, size_t *a)
  */
 
 
-void sigintHandler(__attribute__((unused))int signal_num)
+void singleintHandler(__attribute__((unused))int signal_num)
 {
 	_puts("\n");
 	_puts("$ ");

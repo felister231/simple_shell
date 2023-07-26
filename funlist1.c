@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * get_node_index - Get the index of a node in a linked list
+ * getIndex_node - Get the index of a node in a linked list
  * @head_pointer: Pointer to the head of the linked list
  * @first_node: Pointer to the node whose index is to be found
  *
@@ -9,7 +9,7 @@
  * Return: The index of the node in the list, or -1 if the node is not found
  */
 
-ssize_t get_node_index(list_t *head_pointer, list_t *first_node)
+ssize_t getIndex_node(list_t *head_pointer, list_t *first_node)
 {
 	size_t j = 0;
 
@@ -24,7 +24,7 @@ ssize_t get_node_index(list_t *head_pointer, list_t *first_node)
 }
 
 /**
- * node_starts_with - Find a node with a string that starts with  given prefix
+ * strNode_with - Find a node with a string that starts with  given prefix
  * @first_node: Pointer to the head of the linked list
  * @affix: The prefix to search for at the beginning of the strings
  * @d: Optional character to check after the prefix, or -1 to skip this check
@@ -32,13 +32,13 @@ ssize_t get_node_index(list_t *head_pointer, list_t *first_node)
  * Return: Pointer to  first node with a matching string, or NULL if not found
  */
 
-list_t *node_starts_with(list_t *first_node, char *affix, char d)
+list_t *strNode_with(list_t *first_node, char *affix, char d)
 {
 	char *pointer = NULL;
 
 	while (first_node)
 	{
-		pointer = starts_with(first_node->str, affix);
+		pointer = str_Startwith(first_node->str, affix);
 		if (pointer && ((d == -1) || (*pointer == d)))
 			return (first_node);
 		first_node = first_node->next;
@@ -48,7 +48,7 @@ list_t *node_starts_with(list_t *first_node, char *affix, char d)
 
 
 /**
- * print_list - Print the elements of a linked list
+ * listprint_Node- Print the elements of a linked list
  * @head: Pointer to the head of the linked list
  *
  * Return: The number of nodes in the list
@@ -60,7 +60,7 @@ size_t print_list(const list_t *head)
 
 	while (head)
 	{
-		_puts(convert_number(head->num, 10, 0));
+		_puts(convert_Numstr(head->num, 10, 0));
 		_putchar(':');
 		_putchar(' ');
 		_puts(head->str ? head->str : "(nil)");
@@ -72,17 +72,17 @@ size_t print_list(const list_t *head)
 }
 
 /**
- * list_to_strings - Convert a linked list to an array of strings
+ * convert_list_to_str - Convert a linked list to an array of strings
  * @pointer_head: Pointer to the head of the linked list
  *
  * Return: An array of strings containing the elements of the linked list
  *         or NULL if memory allocation fails
  */
 
-char **list_to_strings(list_t *pointer_head)
+char **convert_list_to_str(list_t *pointer_head)
 {
 	list_t *node = pointer_head;
-	size_t i = list_len(pointer_head), j;
+	size_t i = getList_len(pointer_head), j;
 	char **strs;
 	char *str;
 
@@ -110,13 +110,13 @@ char **list_to_strings(list_t *pointer_head)
 }
 
 /**
- * list_len - Get the number of elements in a linked list
+ * getList_len - Get the number of elements in a linked list
  * @head: Pointer to the head of the linked list
  *
  * Return: The number of nodes in the linked list
  */
 
-size_t list_len(const list_t *head)
+size_t getList_len(const list_t *head)
 {
 	size_t j = 0;
 

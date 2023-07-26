@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * free_info - Free dynamically allocated memory in the info_t struct
+ * free_Datainfo - Free dynamically allocated memory in the info_t struct
  * @info: Pointer to the info_t struct to be freed
  * @all: Flag indicating if to free all resources(1) or only specific ones (0)
  */
 
-void free_info(info_t *info, int all)
+void free_Datainfo(data_info *info, int all)
 {
-	ffree(info->argv);
+	freealloc(info->argv);
 	info->argv = NULL;
 	info->path = NULL;
 	if (all)
@@ -16,14 +16,14 @@ void free_info(info_t *info, int all)
 		if (!info->cmd_buf)
 			free(info->arg);
 		if (info->env)
-			free_list(&(info->env));
+			freeMem_list(&(info->env));
 		if (info->history)
-			free_list(&(info->history));
+			freeMem_list(&(info->history));
 		if (info->alias)
-			free_list(&(info->alias));
-		ffree(info->environ);
+			freeMem_list(&(info->alias));
+		freealloc(info->environ);
 			info->environ = NULL;
-		bfree((void **)info->cmd_buf);
+		free_memory((void **)info->cmd_buf);
 		if (info->readfd > 2)
 			close(info->readfd);
 		_putchar(BUF_FLUSH);
@@ -31,11 +31,11 @@ void free_info(info_t *info, int all)
 }
 
 /**
- * clear_info - Clear/reset the fields in the info_t struct
+ * clear_Datainfo - Clear/reset the fields in the info_t struct
  * @info: Pointer to the info_t struct to be cleared
  */
 
-void clear_info(info_t *info)
+void clear_Datainfo(data_info *info)
 {
 	info->arg = NULL;
 	info->argv = NULL;
@@ -44,12 +44,12 @@ void clear_info(info_t *info)
 }
 
 /**
- * parse_input - Parse the input command and prepare the info_t struct
+ * set_Datainfo - Parse the input command and prepare the info_t struct
  * @info: Pointer to the info_t struct to be prepared
  * @av: Array of strings containing the command-line arguments
  */
 
-void set_info(info_t *info, char **av)
+void set_Datainfo(data_info *info, char **av)
 {
 	int i = 0;
 
@@ -71,7 +71,7 @@ void set_info(info_t *info, char **av)
 			;
 		info->argc = i;
 
-		replace_alias(info);
-		replace_vars(info);
+		cmdAlias_replace(info);
+		variableReplace(info);
 	}
 }
