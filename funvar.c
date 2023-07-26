@@ -2,155 +2,158 @@
 
 /**
  * strContent_replace - Replace the content of string pointer with new string
- * @old: Pointer to the old string pointer
- * @new: New string to be assigned to the old string pointer
+ * @oldString: Pointer to the old string pointer
+ * @newString: New string to be assigned to the old string pointer
  *
  * Return: Always returns 1
  */
 
-int strContent_replace(char **old, char *new)
+int strContent_replace(char **oldString, char *newString)
 {
-	free(*old);
-	*old = new;
+	free(*oldString);
+	*oldString = newString;
 	return (1);
 }
 
 /**
- * variableReplace - Replace variables in argv with corresponding values from env
- * @info: Pointer to the info_t struct containing command and env information
+ * variableReplace - Replace vars in argv with corresponding values from env
+ * @data: Pointer to the info_t struct containing command and env information
  *
  * Return: Always returns 0
  */
 
-int variableReplace(data_info *info)
+int variableReplace(data_info *data)
 {
-	int i = 0;
-	list_t *node;
+	int a = 0;
+	list_t *current_node;
 
-	for (i = 0; info->argv[i]; i++)
+	for (a = 0; data->argv[a]; a++)
 	{
-		if (info->argv[i][0] != '$' || !info->argv[i][1])
+		if (data->argv[a][0] != '$' || !data->argv[a][1])
 			continue;
 
-		if (!_strcmp(info->argv[i], "$?"))
+		if (!_strcmp(data->argv[a], "$?"))
 		{
-			strContent_replace(&(info->argv[i]),
-				_strdup(convert_Numstr(info->status, 10, 0)));
+			strContent_replace(&(data->argv[a]),
+					_strdup(convert_Numstr(data->status, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!_strcmp(data->argv[a], "$$"))
 		{
-			strContent_replace(&(info->argv[i]),
-				_strdup(convert_Numstr(getpid(), 10, 0)));
+			strContent_replace(&(data->argv[a]),
+					_strdup(convert_Numstr(getpid(), 10, 0)));
 			continue;
 		}
-		node = strNode_with(info->env, &info->argv[i][1], '=');
-		if (node)
+		current_node = strNode_with(data->env, &data->argv[a][1], '=');
+		if (current_node)
 		{
-			strContent_replace(&(info->argv[i]),
-				_strdup(_strchr(node->str, '=') + 1));
+			strContent_replace(&(data->argv[a]),
+					_strdup(_strchr(current_node->str, '=') + 1));
 			continue;
 		}
-		strContent_replace(&info->argv[i], _strdup(""));
-
+		strContent_replace(&data->argv[a], _strdup(""));
 	}
 	return (0);
 }
 
 /**
  * cmdAlias_replace - Replace the command with its alias if found in list
- * @info: Pointer to the info_t struct containing command and alias information
+ * @data: Pointer to the info_t struct containing command and alias information
  *
  * Return: 1 if the replacement is successful, 0 if no matching alias is found.
  */
 
-int cmdAlias_replace(data_info *info)
+int cmdAlias_replace(data_info *data)
 {
-	int i;
-	list_t *node;
-	char *p;
+	int index;
+	list_t *current_node;
+	char *pointer;
 
-	for (i = 0; i < 10; i++)
+	for (index = 0; index < 10; index++)
 	{
-		node = strNode_with(info->alias, info->argv[0], '=');
-		if (!node)
+		current_node = strNode_with(data->alias, data->argv[0], '=');
+		if (!current_node)
 			return (0);
-		free(info->argv[0]);
-		p = _strchr(node->str, '=');
-		if (!p)
+		free(data->argv[0]);
+		pointer = _strchr(current_node->str, '=');
+		if (!pointer)
 			return (0);
-		p = _strdup(p + 1);
-		if (!p)
+		pointer = _strdup(pointer + 1);
+		if (!pointer)
 			return (0);
-		info->argv[0] = p;
+		data->argv[0] = pointer;
 	}
 	return (1);
 }
 
 /**
- * bufferUpdate_check - Check the status of command buffer and update it accordingly
- * @info: Pointer to the info_t struct containing command and status info
- * @buf: Buffer containing the command chain
- * @p: Pointer to the current index in the buffer
- * @i: Current index to be checked in the buffer
- * @len: Length of the buffer
+ * bufferUpdate_check - Check the status of command buffer and update it
+ * @data: Pointer to the info_t struct containing command and status info
+ * @buffer: Buffer containing the command chain
+ * @pointer: Pointer to the current index in the buffer
+ * @index: Current index to be checked in the buffer
+ * @length: Length of the buffer
  */
 
-void bufferUpdate_check(data_info *info, char *buf, size_t *p, size_t i, size_t len)
+
+void bufferUpdate_check(data_info *data, char *buffer, size_t *pointer,
+	size_t index, size_t length)
 {
-	size_t j = *p;
+	size_t j = *pointer;
 
-	if (info->cmd_buf_type == CMD_AND)
+	if (data->cmd_buf_type == CMD_AND)
 	{
-		if (info->status)
+		if (data->status)
 		{
-			buf[i] = 0;
-			j = len;
+			buffer[index] = 0;
+			j = length;
 		}
 	}
-	if (info->cmd_buf_type == CMD_OR)
+	if (data->cmd_buf_type == CMD_OR)
 	{
-		if (!info->status)
+		if (!data->status)
 		{
-			buf[i] = 0;
-			j = len;
+			buffer[index] = 0;
+			j = length;
 		}
 	}
 
-	*p = j;
+	*pointer = j;
 }
 
 /**
  * chainCmd - Check if current command is type CMD_OR, CMD_AND, or CMD_CHAIN
- * @info: Pointer to the info_t struct containing command buffer type info
- * @buf: Buffer containing the command chain
- * @p: Pointer to the current index in the buffer
+ * @data: Pointer to the info_t struct containing command buffer type info
+ * @buffer: Buffer containing the command chain
+ * @pointer: Pointer to the current index in the buffer
  *
  * Return: 1 if a valid command chain is found, 0 otherwise.
  */
-int chainCmd(data_info *info, char *buf, size_t *p)
-{
-	size_t j = *p;
 
-	if (buf[j] == '|' && buf[j + 1] == '|')
+int chainCmd(data_info *data, char *buffer, size_t *pointer)
+{
+	size_t j = *pointer;
+
+	if (buffer[j] == '|' && buffer[j + 1] == '|')
 	{
-		buf[j] = 0;
+		buffer[j] = 0;
 		j++;
-		info->cmd_buf_type = CMD_OR;
+		data->cmd_buf_type = CMD_OR;
 	}
-	else if (buf[j] == '&' && buf[j + 1] == '&')
+	else if (buffer[j] == '&' && buffer[j + 1] == '&')
 	{
-		buf[j] = 0;
+		buffer[j] = 0;
 		j++;
-		info->cmd_buf_type = CMD_AND;
+		data->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[j] == ';') /* found end of this command */
+	else if (buffer[j] == ';') /* found end of this command */
 	{
-		buf[j] = 0; /* replace semicolon with null */
-		info->cmd_buf_type = CMD_CHAIN;
+		buffer[j] = 0; /* replace semicolon with null */
+		data->cmd_buf_type = CMD_CHAIN;
 	}
 	else
 		return (0);
-	*p = j;
+
+	*pointer = j;
 	return (1);
 }

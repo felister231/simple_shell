@@ -2,7 +2,7 @@
 
 /**
  * remove_Bufcomments - Remove comments from the buffer
- * @buffer: Pointer to the buffer containing the input string
+ * @buf: Pointer to the buffer containing the input string
  *
  * This function removes comments from  input buffer. A comment is identified
  * by a '#' character that appears at the beginning of a line or after a space.
@@ -10,86 +10,85 @@
  * everything after it with a null terminator ('\0').
  */
 
-void remove_Bufcomments(char *buffer)
-{
-	int j = 0;
 
-	while (buffer[j] != '\0')
+void remove_Bufcomments(char *buf)
+{
+	int index = 0;
+
+	while (buf[index] != '\0')
 	{
-		if (buffer[j] == '#' && (!j || buffer[j - 1] == ' '))
+		if (buf[index] == '#' && (!index || buf[index - 1] == ' '))
 		{
-			buffer[j] = '\0';
+			buf[index] = '\0';
 			break;
 		}
-		j++;
+		index++;
 	}
 }
 
 /**
  * convert_Numstr - Convert a number to a string representation in a given base
- * @num: The number to convert
- * @base: The base for conversion (e.g., 2 for binary, 10 for decimal, etc.)
- * @flags: Flags to control the conversion behavior
+ * @number: The number to convert
+ * @c_base: The base for conversion (e.g., 2 for binary, 10 for decimal, etc.)
+ * @c_flags: Flags to control the conversion behavior
  *
  * Return: A pointer to the string representation of the converted number
  */
 
-char *convert_Numstr(long int num, int base, int flags)
+char *convert_Numstr(long int number, int c_base, int c_flags)
 {
-	static char *array;
-	static char buffer[50];
+	static char *Array;
+	static char buf[50];
 	char sign = 0;
-	char *ptr;
-	unsigned long n = num;
+	char *pointer;
+	unsigned long a = number;
 
-	if (!(flags & CONVERT_UNSIGNED) && num < 0)
+	if (!(c_flags & CONVERT_UNSIGNED) && number < 0)
 	{
-		n = -num;
+		a = -number;
 		sign = '-';
-
 	}
-	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
-	*ptr = '\0';
 
-	do	{
-		*--ptr = array[n % base];
-		n /= base;
-	} while (n != 0);
+	Array = c_flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	pointer = &buf[49];
+	*pointer = '\0';
+
+	do
+
+	{
+		*--pointer = Array[a % c_base];
+		a /= c_base;
+	} while (a != 0);
 
 	if (sign)
-		*--ptr = sign;
-	return (ptr);
+		*--pointer = sign;
+	return (pointer);
 }
 
 /**
  * print_Errorstderr - Print error message to standard error (stderr)
- * @info: Pointer to the info_t struct containing shell information
- * @estr: Error message to be printed
+ * @data: Pointer to the info_t struct containing shell information
+ * @errorstr: Error message to be printed
  *
- * This function prints error message to (stderr). It includes
- * the file name, line count, command name, and the specified error message.
- * Each part of the error message is separated by a colon and space (": ").
- *
- * @info: Pointer to the info_t struct containing shell information
- * @estr: Error message to be printed
+ * Return: void
  */
 
-void print_Errorstderr(data_info *info, char *estr)
+
+void print_Errorstderr(data_info *data, char *errorstr)
 {
-	_eputs(info->fname);
+	_eputs(data->fname);
 	_eputs(": ");
-	print_Intdescriptor(info->line_count, STDERR_FILENO);
+	print_Intdescriptor(data->line_count, STDERR_FILENO);
 	_eputs(": ");
-	_eputs(info->argv[0]);
+	_eputs(data->argv[0]);
 	_eputs(": ");
-	_eputs(estr);
+	_eputs(errorstr);
 }
 
 /**
  * print_Intdescriptor - Print an integer to a file descriptor
- * @input: The integer to be printed
- * @fd: The file descriptor to which the integer is printed
+ * @number: The integer to be printed
+ * @file_des: The file descriptor to which the integer is printed
  *
  * This function prints an integer to the specified file descriptor (fd). It
  * supports printing integers to either standard output (stdout) or standard
@@ -97,33 +96,33 @@ void print_Errorstderr(data_info *info, char *estr)
  * Return: The number of characters printed.
  */
 
-int print_Intdescriptor(int input, int fd)
+int print_Intdescriptor(int number, int file_des)
 {
-	int (*__putchar)(char) = _putchar;
-	int i, count = 0;
-	unsigned int _abs_, current;
+	int (*printChar)(char) = _putchar;
+	int a, count = 0;
+	unsigned int absolute, current;
 
-	if (fd == STDERR_FILENO)
-		__putchar = errorputchar;
-	if (input < 0)
+	if (file_des == STDERR_FILENO)
+		printChar = errorputchar;
+	if (number < 0)
 	{
-		_abs_ = -input;
-		__putchar('-');
+		absolute = -number;
+		printChar('-');
 		count++;
 	}
 	else
-		_abs_ = input;
-	current = _abs_;
-	for (i = 1000000000; i > 1; i /= 10)
+		absolute = number;
+	current = absolute;
+	for (a = 1000000000; a > 1; a /= 10)
 	{
-		if (_abs_ / i)
+		if (absolute / a)
 		{
-			__putchar('0' + current / i);
+			printChar('0' + current / a);
 			count++;
 		}
-		current %= i;
+		current %= a;
 	}
-	__putchar('0' + current);
+	printChar('0' + current);
 	count++;
 
 	return (count);
@@ -131,31 +130,30 @@ int print_Intdescriptor(int input, int fd)
 
 /**
  * _erratoi - Convert a string to an integer
- * @s: The string to be converted
+ * @string: The string to be converted
  *
  * This function converts a string to an integer. It handles positive integers
  * represented as strings and returns the corresponding integer value. The
  * function returns -1 if the input string is invalid or if the resulting
  * integer exceeds the maximum value representable by an integer (INT_MAX).
- *
- * @s: The string to be converted
+ * @string: The string to be converted
  *
  * Return: The converted integer on success, or -1 on failure
  */
 
-int _erratoi(char *s)
+int _erratoi(char *string)
 {
-	int i = 0;
+	int a = 0;
 	unsigned long int result = 0;
 
-	if (*s == '+')
-		s++;  /* TODO: why does this make main return 255? */
-	for (i = 0;  s[i] != '\0'; i++)
+	if (*string == '+')
+		string++;  /* TODO: why does this make main return 255? */
+	for (a = 0;  string[a] != '\0'; a++)
 	{
-		if (s[i] >= '0' && s[i] <= '9')
+		if (string[a] >= '0' && string[a] <= '9')
 		{
 			result *= 10;
-			result += (s[i] - '0');
+			result += (string[a] - '0');
 			if (result > INT_MAX)
 				return (-1);
 		}

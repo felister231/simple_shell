@@ -2,89 +2,89 @@
 /**
  * _eputs - Writes a string to the standard error (stderr).
  *
- * @str: The string to be written to stderr.
+ * @string: The string to be written to stderr.
  *
  * Return: None (void).
  */
 
-void _eputs(char *str)
+void _eputs(char *string)
 {
-	int i = 0;
+	int a = 0;
 
-	if (!str)
+	if (!string)
 		return;
-	while (str[i] != '\0')
+	while (string[a] != '\0')
 	{
-		errorputchar(str[i]);
-		i++;
+		errorputchar(string[a]);
+		a++;
 	}
 }
 
 /**
  * putstrfd - Writes a string to the specified file descriptor.
  *
- * @str: The string to be written.
- * @fd: The file descriptor to write to.
+ * @string: The string to be written.
+ * @file_des: The file descriptor to write to.
  *
  * Return: The number of characters written to the file descriptor.
  *         If the input string is NULL, it returns 0.
  */
-int putstrfd(char *str, int fd)
+int putstrfd(char *string, int file_des)
 {
-	int i = 0;
+	int a = 0;
 
-	if (!str)
+	if (!string)
 		return (0);
-	while (*str)
+	while (*string)
 	{
-		i += put_Filedescriptor(*str++, fd);
+		a += put_Filedescriptor(*string++, file_des);
 	}
-	return (i);
+	return (a);
 }
 
 /**
  * errorputchar - Writes a character to the standard error (stderr).
  *
- * @c: The character to be written to stderr.
+ * @letter: The character to be written to stderr.
  *
  * Return: Always 1.
  */
-int errorputchar(char c)
+int errorputchar(char letter)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static int number;
+	static char buffer[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (letter == BUF_FLUSH || number >= WRITE_BUF_SIZE)
 	{
-		write(2, buf, i);
-		i = 0;
+		write(2, buffer, number);
+		number = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (letter != BUF_FLUSH)
+		buffer[number++] = letter;
 	return (1);
 }
 
 /**
  * put_Filedescriptor - Writes a character to the specified file descriptor.
  *
- * @c: The character to be written.
- * @fd: The file descriptor to write to.
+ * @letter: The character to be written.
+ * @file_des: The file descriptor to write to.
  *
  * Return: Always 1.
  */
 
-int put_Filedescriptor(char c, int fd)
+int put_Filedescriptor(char letter, int file_des)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static int number;
+	static char buffer[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (letter == BUF_FLUSH || number >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, i);
-		i = 0;
+		write(file_des, buffer, number);
+		number = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (letter != BUF_FLUSH)
+		buffer[number++] = letter;
 	return (1);
 }
 

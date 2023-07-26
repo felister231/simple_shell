@@ -3,40 +3,40 @@
 /**
  * enviro_list_pop - Populates the environment linked list with env vars.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *
  * Return: Always 0.
  */
 
-int enviro_list_pop(data_info *info)
+int enviro_list_pop(data_info *data)
 {
 	list_t *node = NULL;
-	size_t i;
+	size_t index;
 
-	for (i = 0; environ[i]; i++)
-		nodeAdd_end(&node, environ[i], 0);
-	info->env = node;
+	for (index = 0; environ[index]; index++)
+		nodeAdd_end(&node, environ[index], 0);
+	data->env = node;
 	return (0);
 }
 
 /**
  * _myenvironment - Prints the current environment.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *
  * Return: Always 0.
  */
-int _myenvironment(data_info *info)
+int _myenvironment(data_info *data)
 {
-	nodePrint_str(info->env);
+	nodePrint_str(data->env);
 	return (0);
 }
 /**
  * _getenviroment - Gets the value of an environment variable.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * @name: The environment variable name.
  *
@@ -44,17 +44,17 @@ int _myenvironment(data_info *info)
  *         If the variable is not found, returns NULL.
  */
 
-char *_getenviroment(data_info *info, const char *name)
+char *_getenviroment(data_info *data, const char *name)
 {
-	list_t *node = info->env;
-	char *p;
+	list_t *current_node = data->env;
+	char *pointer;
 
-	while (node)
+	while (current_node)
 	{
-		p = str_Startwith(node->str, name);
-		if (p && *p)
-			return (p);
-		node = node->next;
+		pointer = str_Startwith(current_node->str, name);
+		if (pointer && *pointer)
+			return (pointer);
+		current_node = current_node->next;
 	}
 	return (NULL);
 }
@@ -62,31 +62,31 @@ char *_getenviroment(data_info *info, const char *name)
 /**
  * unset_Environ_variroment - Remove an environment variable.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *
  * Return: Always 0.
  */
 
-int unset_Environ_variroment(data_info *info)
+int unset_Environ_variroment(data_info *data)
 {
-	int i;
+	int a;
 
-	if (info->argc == 1)
+	if (data->argc == 1)
 	{
-		_eputs("Too few arguements.\n");
+		_eputs("Too few arguments.\n");
 		return (1);
-	}
-	for (i = 1; i <= info->argc; i++)
-		unset_Environ_var(info, info->argv[i]);
+	} 
+	for (a = 1; a <= data->argc; a++)
+		unset_Environ_var(data, data->argv[a]);
 
 	return (0);
 }
 
 /**
- * _mysetenviroment - Initializes a new environ variable or modifies an existing one.
+ * _mysetenviroment - Initializes  new environ var or modifies existing one.
  *
- * @info: Structure containing potential arguments. Used to maintain
+ * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *
  * Return: If the function is called with an incorrect number of arguments,
@@ -95,14 +95,14 @@ int unset_Environ_variroment(data_info *info)
  *         On failure, it returns 1.
  */
 
-int _mysetenviroment(data_info *info)
+int _mysetenviroment(data_info *data)
 {
-	if (info->argc != 3)
+	if (data->argc != 3)
 	{
-		_eputs("Incorrect number of arguements\n");
+		_eputs("Incorrect number of arguments\n");
 		return (1);
 	}
-	if (update_Env(info, info->argv[1], info->argv[2]))
+	if (update_Env(data, data->argv[1], data->argv[2]))
 		return (0);
 	return (1);
 }
