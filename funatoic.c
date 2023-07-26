@@ -2,7 +2,7 @@
 
 /**
  * interactive - returns true if shell is interactive mode
- * @info: struct address
+ * @data: struct address
  *
  * Return: 1 if interactive mode, 0 otherwise
  */
@@ -13,10 +13,10 @@ int interactive(data_info *data)
 
 /**
  * _atoi - Convert a string to an integer
- * @s: Pointer to the string to be converted
+ * @a: Pointer to the string to be converted
  *
  * The function converts the input string @s to an integer.
- * @s: Pointer to the string to be converted
+ * @a: Pointer to the string to be converted
  *
  * Return: The converted integer value
  */
@@ -72,11 +72,11 @@ int is_delim(char c, char *delim)
 
 /**
  * _isalpha - Check if a character is an alphabet letter
- * @c: The character to be checked
+ * @a: The character to be checked
  *
  * The function checks if the character @c is an alphabet letter (a-z or A-Z).
  *
- * @c: The character to be checked
+ * @a: The character to be checked
  *
  * Return: 1 if @c is an alphabet letter, otherwise 0
  */

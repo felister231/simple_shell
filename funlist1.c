@@ -48,7 +48,7 @@ list_t *strNode_with(list_t *first_node, char *affix, char d)
 
 
 /**
- * listprint_Node- Print the elements of a linked list
+ * print_list - Print the elements of a linked list
  * @head: Pointer to the head of the linked list
  *
  * Return: The number of nodes in the list

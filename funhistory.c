@@ -2,7 +2,7 @@
 
 /**
  * write_cmdhistory - Write the command history to a file
- * @info: Pointer to the info_t structure containing the command history
+ * @data: Pointer to the info_t structure containing the command history
  * Return: On success, returns 1. On failure, returns -1.
  */
 
@@ -32,7 +32,7 @@ int write_cmdhistory(data_info *data)
 
 /**
  * get_Filehist - Get the path of the history file
- * @info: Pointer to the info_t structure containing the environment
+ * @data: Pointer to the info_t structure containing the environment
  *
  * Return: On success, returns a pointer to a newly allocated string containing
  * the path of the history file. On failure or if the history file is not set,
@@ -59,8 +59,8 @@ char *get_Filehist(data_info *data)
 
 /**
  * history_build_ls - Build and maintain the history list.
- * @info: Pointer to the info_t structure containing the history list.
- * @buf: Pointer to the buffer containing the command line input.
+ * @data: Pointer to the info_t structure containing the history list.
+ * @buffer: Pointer to the buffer containing the command line input.
  * @linecount: The current line count.
  *
  * Return: Always returns 0.
@@ -81,7 +81,7 @@ int history_build_ls(data_info *data, char *buffer, int linecount)
 
 /**
  * readAll_his - Read history from history file and build the history list.
- * @info: Pointer to the info_t structure containing the history list.
+ * @data: Pointer to the info_t structure containing the history list.
  *
  * Return: 1 on success, 0 on failure.
  */
@@ -95,23 +95,23 @@ int readAll_his(data_info *data)
 	char *buffer = NULL, *file_tag = get_Filehist(data);
 
 	if (!file_tag)
-		return 0;
+		return (0);
 
 	file_descriptor = open(file_tag, O_RDONLY);
 	free(file_tag);
 	if (file_descriptor == -1)
-		return 0;
+		return (0);
 	if (!fstat(file_descriptor, &st))
 		file_size = st.st_size;
 	if (file_size < 2)
-		return 0;
+		return (0);
 	buffer = malloc(sizeof(char) * (file_size + 1));
 	if (!buffer)
-		return 0;
+		return (0);
 	read_length = read(file_descriptor, buffer, file_size);
 	buffer[file_size] = 0;
 	if (read_length <= 0)
-		return free(buffer), 0;
+		return (free(buffer), 0);
 	close(file_descriptor);
 	for (a = 0; a < file_size; a++)
 		if (buffer[a] == '\n')
@@ -127,13 +127,13 @@ int readAll_his(data_info *data)
 	while (data->histcount-- >= HIST_MAX)
 		deleteNode_index(&(data->history), 0);
 	renum_Nodehistory(data);
-	return data->histcount;
+	return (data->histcount);
 }
 
 
 /**
  * renum_Nodehistory - Renumber histylist nodes sequential nos starting from 0.
- * @info: Pointer to the info_t structure containing the history list.
+ * @data: Pointer to the info_t structure containing the history list.
  *
  * Return: The total number of history list nodes after renumbering.
  */

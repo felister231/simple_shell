@@ -60,13 +60,13 @@ char *_memset(char *string, char byte, unsigned int number)
 
 /**
  * freealloc - Free a dynamically allocated array of strings
- * @pp: Pointer to the array of strings to be freed
+ * @pointer: Pointer to the array of strings to be freed
  *
  * Frees the dynamically allocated memory for each string in the array, as well
  * as the array itself. It is the responsibility of the caller to ensure that
  * 'pp' is a valid pointer to a dynamically allocated array of strings.
  *
- * @pp: Pointer to the array of strings to be freed
+ * @pointer: Pointer to the array of strings to be freed
  */
 
 

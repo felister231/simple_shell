@@ -2,7 +2,7 @@
 
 /**
  * freeMem_list - Free the memory occupied by a linked list and its nodes.
- * pointer_head: A pointer to the head node of the linked list.
+ * @pointer_head: A pointer to the head node of the linked list.
  *
  * This function frees the memory occupied by a linked list and its nodes,
  * including the memory allocated for the string in each node.

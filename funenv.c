@@ -76,7 +76,7 @@ int unset_Environ_variroment(data_info *data)
 	{
 		_eputs("Too few arguments.\n");
 		return (1);
-	} 
+	}
 	for (a = 1; a <= data->argc; a++)
 		unset_Environ_var(data, data->argv[a]);
 

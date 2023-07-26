@@ -2,7 +2,7 @@
 
 /**
  * get_userinput - Reads user input and processes command chains.
- * @info: Pointer to the info_t struct that holds shell information.
+ * @data: Pointer to the info_t struct that holds shell information.
  *
  * This function reads user input from the command line and processes
  * command chains separated by semicolons (';'). It handles command chains
@@ -44,19 +44,19 @@ ssize_t get_userinput(data_info *data)
 			data->cmd_buf_type = CMD_NORM;
 		}
 
-		*buffer_pointer = pointer; /* pass back pointer to current command position */
+		*buffer_pointer = pointer; /* pass back pointer to current command*/
 		return (_strlen(pointer)); /* return length of current command */
 	}
 
-	*buffer_pointer = buffer; /* else not a chain, pass back buffer from _getline() */
+	*buffer_pointer = buffer;
 	return (i); /* return length of buffer from _getline() */
 }
 
 /**
  * input_buffer - Reads user input from stdin and processes command chains.
- * @info: Pointer to the info_t struct that holds shell information.
- * @buf: Pointer to a pointer that holds the input buffer.
- * @len: Pointer to the size of the input buffer.
+ * @data: Pointer to the info_t struct that holds shell information.
+ * @buffer: Pointer to a pointer that holds the input buffer.
+ * @length: Pointer to the size of the input buffer.
  *
  * Return: Length of the input buffer. Returns -1 on EOF.
  */
@@ -100,9 +100,9 @@ ssize_t input_buffer(data_info *data, char **buffer, size_t *length)
 
 /**
  * _getline - Reads input from the buffer 'buf' and handles line processing.
- * @info: Pointer to the info_t struct that holds shell information.
+ * @data: Pointer to the info_t struct that holds shell information.
  * @ptr: Pointer to a pointer that holds the input buffer.
- * @length: Pointer to the size of the input buffer.
+ * @longg: Pointer to the size of the input buffer.
  *
  * Return: Length of input buffer. Returns -1 on read failure or malloc error.
  */
@@ -148,9 +148,9 @@ int _getline(data_info *data, char **ptr, size_t *longg)
 
 /**
  * read_buffer - Reads input from the file descriptor into the buffer 'buf'.
- * @info: Pointer to the info_t struct that holds shell information.
- * @buf: Pointer to the buffer to store the read input.
- * @i: Pointer to a size_t variable representing the buffer's current position.
+ * @data: Pointer to the info_t struct that holds shell information.
+ * @buffer: Pointer to the buffer to store the read input.
+ * @a: Pointer to a size_t variable representing the buffer's current position.
  *
  * This function reads input from the file descriptor 'info->readfd' into the
  * buffer 'buf'. It updates the 'i' pointer with the number of bytes read.
@@ -171,7 +171,7 @@ ssize_t read_buffer(data_info *data, char *buffer, size_t *a)
 }
 /**
  * singleintHandler - Signal handler function for SIGINT (Ctrl+C) signal.
- * @sig_num: The signal number (unused in the function).
+ * @signal_num: The signal number (unused in the function).
  *
  * This function is called when the SIGINT signal is received.
  *
