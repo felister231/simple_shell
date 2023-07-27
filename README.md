@@ -1,6 +1,6 @@
 THE SIMPLE SHELL TEAM PROJECT
 As part of the ALX collaboration project, have been tasked with
- developing a shell program that emulates the functionality of the Bash shell. 
+developing a shell program that emulates the functionality of the Bash shell.
 Our shell will be known as 'AquaShell'."
 
 
