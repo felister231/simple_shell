@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * duplicate_chars - Extract a portion of a string and store it in a static buffer
+ * duplicate_chars - Extract a portion of a string and store  a static buffer
  * @pathstr: Input string
  * @start: Starting index (inclusive) for extraction
  * @stop: Stopping index (exclusive) for extraction
@@ -22,7 +22,7 @@ char *duplicate_chars(char *pathstr, int start, int stop)
 }
 
 /**
- *searchPath- Search for a command executable in the given path
+ * pathCmd - Search for a command executable in the given path
  * @data: Pointer to the info_t struct
  * @pathString: Path string containing directories to search for the command
  * @command: Command to search for
@@ -38,12 +38,12 @@ char *pathCmd(data_info *data, char *pathString, char *command)
 	char *path;
 
 	if (!pathString)
-		return NULL;
+		return (NULL);
 
 	if ((_strlen(command) > 2) && str_Startwith(command, "./"))
 	{
 		if (is_commandline(data, command))
-			return command;
+			return (command);
 	}
 
 	while (1)
@@ -59,7 +59,7 @@ char *pathCmd(data_info *data, char *pathString, char *command)
 				_strcat(path, command);
 			}
 			if (is_commandline(data, path))
-				return path;
+				return (path);
 			if (!pathString[i])
 				break;
 			current_position = i;
@@ -67,14 +67,14 @@ char *pathCmd(data_info *data, char *pathString, char *command)
 		i++;
 	}
 
-	return NULL;
+	return (NULL);
 }
 
 
 
 /**
  * is_commandline - Check if the path is a regular file (executable command)
- * @info: Pointer to the info_t struct (unused)
+ * @data: Pointer to the info_t struct (unused)
  * @path: Path to check
  *
  * Return: 1 if the path is a regular file (executable command), 0 otherwise

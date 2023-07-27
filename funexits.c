@@ -53,7 +53,7 @@ char *_strncpy(char *destination, char *source, int n)
 
 /**
  * _strncat - Concatenate two strings up to n bytes
- * @destinnation: Pointer to the destination buffer
+ * @destination: Pointer to the destination buffer
  * @source: Pointer to the source string
  * @a: Number of bytes o concatenate
  * Return: A pointer to the destination buffer @dest.

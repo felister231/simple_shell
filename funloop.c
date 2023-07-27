@@ -2,7 +2,7 @@
 
 /**
  * fork_commandline - Fork and execute a command in the info_t struct.
- * @info: Pointer to info_t struct containing shell information
+ * @data: Pointer to info_t struct containing shell information
  *
  * Return: None.
  */
@@ -43,7 +43,7 @@ void fork_commandline(data_info *data)
 
 /**
  * fun_findBuiltin - Check if the command is a built-in and execute it.
- * @info: Pointer to info_t struct containing shell information.
+ * @data: Pointer to info_t struct containing shell information.
  *
  * This function iterates through a table of recognized built-in commands
  * and checks if the current command matches any of them. If a match is found,
@@ -80,12 +80,12 @@ int fun_findBuiltin(data_info *data)
 
 /**
  * find_commandLine - Find and execute the given command.
- * @info: Pointer to info_t struct containing shell information.
+ * @data: Pointer to info_t struct containing shell information.
  *
  * This function checks if the command contains any arguments and if it does,
  * it tries to locate the path of the command using the "pathCmd" function.
  * If the command is found, it updates the path in the info_t struct and calls
- * the "fork_commandline" function to execute the command. If the command is not found,
+ * the "fork_commandline" function to execute the command.
  * it checks if the command is an absolute path or a built-in command, and if
  * so, it executes the command. Otherwise, it prints an error message
 i *
@@ -130,8 +130,8 @@ void find_commandLine(data_info *data)
 
 /**
  * hsh - The main function of the simple shell program.
- * @info: Pointer to the info_t structure containing shell information.
- * @av: Array of strings containing the command-line arguments.
+ * @data: Pointer to the info_t structure containing shell information.
+ * @argv: Array of strings containing the command-line arguments.
  *
  * Return: Returns exit status of shell or a special value if an error occurs.
  */

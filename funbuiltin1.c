@@ -2,7 +2,7 @@
 
 /**
  * printFmt_alias - Print an alias in the format: "alias='value'\n"
- * @node: Pointer to the list node containing the alias string
+ * @first_node: Pointer to the list node containing the alias string
  *
  * Return: 0 on success, 1 if the node is NULL
  */
@@ -96,7 +96,7 @@ int unsetList_alias(data_info *data, char *string)
 }
 
 /**
- * setList_alias- Set an alias in the alias list
+ * set_alias- Set an alias in the alias list
  * @data: Pointer to the info_t struct containing alias list
  * @string: The alias string to set
  *

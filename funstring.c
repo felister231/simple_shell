@@ -68,8 +68,8 @@ int _strlen(char *string)
 
 /**
  * _strcmp - Compares two strings.
- * @s1: Pointer to the first string.
- * @s2: Pointer to the second string.
+ * @string1: Pointer to the first string.
+ * @string2: Pointer to the second string.
  *
  * This function compares two strings character by character and returns
  * the difference of the ASCII values of the first non-matching characters,

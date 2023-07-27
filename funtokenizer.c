@@ -37,7 +37,7 @@ char **str_Delim(char *string, char c)
 	if (word_count == 0)
 		return (NULL);
 
-	b = (char **)malloc((word_count + 1) * sizeof(char *)); /* +1 for NULL terminator */
+	b = (char **)malloc((word_count + 1) * sizeof(char *));
 	if (!b)
 		return (NULL);
 
@@ -61,23 +61,15 @@ char **str_Delim(char *string, char c)
 			free(b);
 			return (NULL);
 		}
-
-		/* Copy the characters of the word into the allocated memory.*/
 		for (a = 0; a < z; a++)
 			b[y][a] = string[x++];
 		b[y][a] = '\0'; /* Null-terminate the word.*/
-
-		/* Move to the next word or end of the string.*/
 		while (string[x] == c)
 			x++;
 	}
-
 	b[y] = NULL; /* Null-terminate the array of strings.*/
-
 	return (b);
 }
-
-
 /**
  * strtow - Split a string into words using multiple delimiters
  * @str: The input string to be split
