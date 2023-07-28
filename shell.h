@@ -116,12 +116,16 @@ typedef struct builtin
 /* funloop.c */
 int hsh(data_info *, char **);
 int fun_findBuiltin(data_info *);
+
+/* shell_loop.c*/
 void find_commandLine(data_info *);
 void fork_commandline(data_info *);
 
 /* funparser.c */
 int is_commandline(data_info *, char *);
 char *duplicate_chars(char *, int, int);
+
+/*1parser.c*/
 char *pathCmd(data_info *, char *, char *);
 
 /* loophsh.c */
@@ -130,6 +134,8 @@ int loophsh(char **);
 /* funerrors.c */
 void _eputs(char *);
 int errorputchar(char);
+
+/*1parser.c*/
 int put_Filedescriptor(char c, int fd);
 int putstrfd(char *str, int fd);
 
@@ -172,6 +178,8 @@ int _atoi(char *);
 int _erratoi(char *);
 void print_Errorstderr(data_info *, char *);
 int print_Intdescriptor(int, int);
+
+/*funerror2.c*/
 char *convert_Numstr(long int, int, int);
 void remove_Bufcomments(char *);
 
@@ -198,6 +206,8 @@ void free_Datainfo(data_info *, int);
 char *_getenviroment(data_info *, const char *);
 int _myenvironment(data_info *);
 int _mysetenviroment(data_info *);
+
+/*envfun.c*/
 int unset_Environ_variroment(data_info *);
 int enviro_list_pop(data_info *);
 
@@ -209,6 +219,8 @@ int update_Env(data_info *, char *, char *);
 /* funhistory.c */
 char *get_Filehist(data_info *data);
 int write_cmdhistory(data_info *data);
+
+/*hisfn.c*/
 int readAll_his(data_info *data);
 int history_build_ls(data_info *data, char *buf, int linecount);
 int renum_Nodehistory(data_info *data);
@@ -217,6 +229,8 @@ int renum_Nodehistory(data_info *data);
 list_t *addStart_node(list_t **, const char *, int);
 list_t *nodeAdd_end(list_t **, const char *, int);
 size_t nodePrint_str(const list_t *);
+
+/*lsfn.c*/
 int deleteNode_index(list_t **, unsigned int);
 void freeMem_list(list_t **);
 
@@ -224,12 +238,16 @@ void freeMem_list(list_t **);
 size_t getList_len(const list_t *);
 char **convert_list_to_str(list_t *);
 size_t print_list(const list_t *);
+
+/*lsfn2.c*/
 list_t *strNode_with(list_t *, char *, char);
 ssize_t getIndex_node(list_t *, list_t *);
 
 /* funvar.c */
 int chainCmd(data_info *, char *, size_t *);
 void bufferUpdate_check(data_info *, char *, size_t *, size_t, size_t);
+
+/*varfn.c*/
 int cmdAlias_replace(data_info *);
 int variableReplace(data_info *);
 int strContent_replace(char **, char *);
